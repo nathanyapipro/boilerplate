@@ -4,36 +4,36 @@ import { Route, Redirect, RouteProps } from "react-router-dom";
 import { StoreState } from "../states";
 
 interface UnauthenticatedRouteProps extends RouteProps {
-	component: React.ComponentType<any>;
+  component: React.ComponentType<any>;
 }
 
 interface ReduxStateProps {
-	isAuthenticated: boolean;
+  isAuthenticated: boolean;
 }
 
 type Props = UnauthenticatedRouteProps & ReduxStateProps;
 
 function UnauthenticatedRouteBase(props: Props) {
-	const { component: Component, isAuthenticated, ...rest } = props;
+  const { component: Component, isAuthenticated, ...rest } = props;
 
-	return (
-		<Route
-			{...rest}
-			render={props =>
-				isAuthenticated ? <Redirect to="/" /> : <Component {...props} />
-			}
-		/>
-	);
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated ? <Redirect to="/" /> : <Component {...props} />
+      }
+    />
+  );
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-	const { credentials } = state.auth;
+  const { credentials } = state.auth;
 
-	return {
-		isAuthenticated: Boolean(
-			credentials && credentials.accessToken && credentials.user
-		)
-	};
+  return {
+    isAuthenticated: Boolean(
+      credentials && credentials.accessToken && credentials.user
+    )
+  };
 };
 
 const UnauthenticatedRoute = connect(mapStateToProps)(UnauthenticatedRouteBase);

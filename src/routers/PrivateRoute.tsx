@@ -30,9 +30,7 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
   const { credentials } = state.auth;
 
   return {
-    isAuthenticated: Boolean(
-      credentials && credentials.accessToken && credentials.user
-    )
+    isAuthenticated: Boolean(credentials && credentials.appToken)
   };
 };
 

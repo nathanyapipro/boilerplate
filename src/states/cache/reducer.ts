@@ -5,80 +5,80 @@ import { getLocalStorageAuthCredentials } from "../../helpers/auth";
 import { ById } from "../../types";
 
 export interface NormalizedModel<T> {
-	byId: ById<T>;
-	allIds: Array<string>;
+  byId: ById<T>;
+  allIds: Array<number>;
 }
 
 export interface CacheState {
-	users: NormalizedModel<User>;
+  users: NormalizedModel<User>;
 }
 
 interface HasId {
-	id: string;
+  id: number;
 }
 
 function batchUpdate<T extends HasId>(
-	initialState: NormalizedModel<T>,
-	models: Array<T>
+  initialState: NormalizedModel<T>,
+  models: Array<T>
 ): NormalizedModel<T> {
-	const newAllIds = models.map(m => m.id);
-	const newById = models.reduce(
-		(acc: ById<T>, model: T): ById<T> => ({
-			...acc,
-			[model.id]: model
-		}),
-		{}
-	);
+  const newAllIds = models.map(m => m.id);
+  const newById = models.reduce(
+    (acc: ById<T>, model: T): ById<T> => ({
+      ...acc,
+      [model.id]: model
+    }),
+    {}
+  );
 
-	return {
-		byId: {
-			...initialState.byId,
-			...newById
-		},
-		allIds: Array.from(new Set([...initialState.allIds, ...newAllIds]))
-	};
+  return {
+    byId: {
+      ...initialState.byId,
+      ...newById
+    },
+    allIds: Array.from(new Set([...initialState.allIds, ...newAllIds]))
+  };
 }
 
 const credentials = getLocalStorageAuthCredentials();
 
 const INITIAL_ENTITY_STATE = {
-	byId: {},
-	allIds: []
+  byId: {},
+  allIds: []
 };
 
 const INITIAL_STATE = {
-	users: credentials
-		? {
-				byId: {
-					[credentials.user.id]: credentials.user
-				},
-				allIds: [credentials.user.id]
-		  }
-		: INITIAL_ENTITY_STATE
+  users: credentials
+    ? {
+        byId: {
+          [credentials.id]: credentials
+        },
+        allIds: [credentials.id]
+      }
+    : INITIAL_ENTITY_STATE
 };
 
 export function cache(
-	state: CacheState = INITIAL_STATE,
-	action: ActionType<typeof apiActions>
+  state: CacheState = INITIAL_STATE,
+  action: ActionType<typeof apiActions>
 ): CacheState {
-	switch (action.type) {
-		case getType(apiActions.login.success): {
-			const { user } = action.payload;
+  switch (action.type) {
+    case getType(apiActions.login.success): {
+      const { ...user } = action.payload;
 
-			return {
-				...state,
-				users: batchUpdate(state.users, [user])
-			};
-		}
-		// case getType(apiActions.getUsers.success): {
-		// 	const { data } = action.payload;
+      return {
+        ...state,
+        users: batchUpdate(state.users, [user])
+      };
+    }
+    // case getType(apiActions.getUsers.success): {
+    // 	const { data } = action.payload;
 
-		// 	return {
-		// 		...state,
-		// 		users: batchUpdate(state.users, data)
-		// 	};
-		// }
-		default:
-			return state;
-	}
+    // 	return {
+    // 		...state,
+    // 		users: batchUpdate(state.users, data)
+    // 	};
+    // }
+    default:
+      return state;
+  }
 }

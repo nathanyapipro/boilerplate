@@ -2,6 +2,7 @@
   "name": "aos",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://api-dev.rgrft.com/v1",
   "dependencies": {
     "@material-ui/core": "^4.1.0",
     "@material-ui/icons": "^4.1.0",
@@ -30,7 +31,9 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "retry-axios": "^1.0.1",
-    "typesafe-actions": "^4.4.0"
+    "sha1": "^1.1.1",
+    "typesafe-actions": "^4.4.0",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -75,6 +78,8 @@
     "@types/react-redux": "^7.1.0",
     "@types/react-router-dom": "^4.3.3",
     "@types/react-select": "^2.0.19",
+    "@types/sha1": "^1.1.2",
+    "@types/uuid": "^3.4.4",
     "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
     "faker": "^4.1.0",

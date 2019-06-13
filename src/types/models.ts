@@ -1,13 +1,104 @@
 interface ModelBase {
-	id: string;
-	type: string;
+  id: number;
+  createdDate: any;
+  modifiedDate: any;
 }
 
-export interface User {
-	id: string;
-	username?: string;
-	name?: string;
-	email: string;
-	isAdmin: boolean;
-	createdDate: string;
+export interface UserBase extends ModelBase {
+  appToken: string;
+  email: string;
+}
+
+export interface UserProfile {
+  id: number;
+  name: string;
+  profiletype: string;
+}
+
+export interface UserRole extends ModelBase {
+  name: string;
+}
+
+export interface User extends ModelBase {
+  appToken: string;
+  email: string;
+  disabled: boolean;
+  lastModifiedAdminId: number;
+  parentId: number;
+  profiles: UserProfile[];
+  roles: UserRole[];
+  name: string;
+  isAdmin: boolean;
+  createdDate: string;
+}
+
+export interface DeviceManufacturer extends ModelBase {
+  name: string;
+  description: string;
+  imageUrl: string;
+  lastModifiedAdmin: string;
+}
+
+export interface PodManufacturer extends ModelBase {
+  name: string;
+  description: string;
+  imageUrl: string;
+  lastModifiedAdmin: string;
+}
+
+export interface Stage extends ModelBase {
+  name: string;
+  description: string;
+  productionId: number;
+  active: string;
+  requirePrevious: boolean;
+}
+
+export interface Production extends ModelBase {
+  name: string;
+  description: string;
+  stages: Stage[];
+}
+
+export interface DeviceProduction extends ModelBase {
+  adcValue: string;
+  chargingCurrent: string;
+  comment: string;
+  deviceManufacturerId: number;
+  deviceModelId: number;
+  deviceUniqueId: string;
+  lastModifiedAdminId: number;
+  ledCurrent: string;
+  ledStatus: string;
+  macAddress: string;
+  pEndingCurrent: string;
+  pairedCurrent: string;
+  podInfo: string;
+  productionFwDownloadStatus: string;
+  productionFwVersion: string;
+  rssiValue: string;
+  sensorValue: string;
+  sn: string;
+  stageId: number;
+  stageResult: string;
+  standbyCurrent: string;
+  systemVoltage: string;
+  userFwDownloadStatus: string;
+  userFwVersion: string;
+  utcTimeInfo: string;
+  vacuumTest: string;
+  vapingCurrent: string;
+}
+
+export interface PodProduction extends ModelBase {
+  chipId: string;
+  comment: string;
+  lastModifiedAdminId: number;
+  podManufacturerId: number;
+  rValue: string;
+  sn: string;
+  stageId: number;
+  stageResult: string;
+  utcTimeInfo: string;
+  vacuumTest: string;
 }

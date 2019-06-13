@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   content: {
     display: "flex",
     flexDirection: "column",
-    boxShadow: "8px 0px 16px 0px",
+    boxShadow: "8px 0px 12px 0px",
     backgroundColor: theme.palette.grey[50],
     flex: 1,
     padding: theme.spacing(3)

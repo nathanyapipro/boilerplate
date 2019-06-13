@@ -14,13 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  },
-  card: {
-    display: "flex",
-    flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing(3)}px ${theme.spacing(6)}px`
+    justifyContent: "center"
   }
 }));
 
@@ -31,11 +26,9 @@ function HomeBase(props: Props) {
 
   return (
     <div className={classes.container}>
-      <Card className={classes.card}>
-        <Typography variant="h4" gutterBottom={false}>
-          HOME
-        </Typography>
-      </Card>
+      <Typography variant="h4" gutterBottom={false}>
+        HOME
+      </Typography>
     </div>
   );
 }

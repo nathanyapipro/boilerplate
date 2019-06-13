@@ -1,6 +1,8 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Theme } from "@material-ui/core/styles";
+import Sidebar from "./Sidebar";
+import SubSidebar from "./SubSidebar";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -14,18 +16,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: "1 1 auto",
     flexDirection: "row"
   },
-  sidebar: {
-    display: "flex",
-    flexDirection: "row",
-    borderRight: `1px solid ${theme.palette.divider}`,
-    flex: "0 0 auto",
-    // backgroundColor: theme.palette.common.white,
-    width: theme.spacing(9)
-  },
   content: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: theme.palette.common.white,
+    boxShadow: "8px 0px 16px 0px",
+    backgroundColor: theme.palette.grey[50],
     flex: 1,
     padding: theme.spacing(3)
   }
@@ -37,7 +32,8 @@ function AppLayout(props: Props) {
 
   return (
     <div className={classes.container}>
-      <div className={classes.sidebar}></div>
+      <Sidebar />
+      <SubSidebar />
       <div className={classes.content}>{children}</div>
     </div>
   );

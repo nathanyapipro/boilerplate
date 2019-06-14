@@ -18,6 +18,20 @@ export type ApiLogoutResponse = undefined;
 
 export type ApiGetFirmwaresResponse = Firmware[];
 
+export type ApiPostFirmwareParams = Omit<
+  Firmware,
+  "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
+>;
+
+export type ApiPostFirmwareResponse = Firmware;
+
+export type ApiPutFirmwareParams = Omit<
+  Firmware,
+  "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
+>;
+
+export type ApiPutFirmwareResponse = Firmware;
+
 interface AxiosResponseError extends AxiosError {
   response: AxiosError["response"];
 }

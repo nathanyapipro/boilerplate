@@ -25,17 +25,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing(3)}px ${theme.spacing(6)}px`
+    padding: `${theme.spacing(6)}px ${theme.spacing(8)}px`
   },
   form: {
     display: "flex",
     flexDirection: "column",
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(4),
     width: "100%"
   },
+  field: {
+    marginBottom: theme.spacing(3)
+  },
   button: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    height: theme.spacing(6),
+    marginTop: theme.spacing(4)
   },
   error: {
     marginTop: theme.spacing(2),
@@ -92,26 +95,32 @@ function LoginBase(props: Props) {
         ) : (
           undefined
         )}
+        <Typography variant="caption" color="textSecondary">
+          Email
+        </Typography>
         <TextField
           required
           id="email"
-          label="Email"
+          className={classes.field}
           variant="outlined"
           value={email}
           onChange={e => setEmail(e.target.value)}
           fullWidth
-          margin="normal"
+          margin="none"
         />
+        <Typography variant="caption" color="textSecondary">
+          Password
+        </Typography>
         <TextField
           required
           id="password"
-          label="Password"
+          className={classes.field}
           variant="outlined"
           value={password}
           onChange={e => setPassword(e.target.value)}
           fullWidth
           type="password"
-          margin="normal"
+          margin="none"
         />
         <Button
           variant="contained"

@@ -129,8 +129,9 @@ export class ApiClient {
     const apiKey = sha1(temp);
 
     return {
-      Authorization: this.token,
+      // Authorization: this.token,
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
       apiKey: apiKey,
       time: time,
       uuid: uuid,
@@ -142,6 +143,7 @@ export class ApiClient {
     path: string,
     args: RequestInit = {
       method: "get",
+      mode: "cors",
       headers: this.getHeaders()
     }
   ): Promise<HttpResponse<T>> => {
@@ -153,6 +155,7 @@ export class ApiClient {
     body: any,
     args: RequestInit = {
       method: "post",
+      mode: "cors",
       body: JSON.stringify(body),
       headers: this.getHeaders()
     }
@@ -165,6 +168,7 @@ export class ApiClient {
     body: any,
     args: RequestInit = {
       method: "put",
+      mode: "cors",
       body: JSON.stringify(body),
       headers: this.getHeaders()
     }

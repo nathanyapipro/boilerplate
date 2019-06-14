@@ -24,7 +24,7 @@ export interface User extends ModelBase {
   email: string;
   disabled: boolean;
   lastModifiedAdminId: number;
-  parentId: number;
+  parentId?: number;
   profiles: UserProfile[];
   roles: UserRole[];
   name: string;
@@ -101,4 +101,13 @@ export interface PodProduction extends ModelBase {
   stageResult: string;
   utcTimeInfo: string;
   vacuumTest: string;
+}
+export interface Firmware extends ModelBase {
+  description: string;
+  model: string;
+  publishedDate: string;
+  url: string;
+  version: string;
+  deleted: boolean;
+  lastModifiedAdminId: number;
 }

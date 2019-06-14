@@ -47,7 +47,6 @@ export default {
     "lastModifiedAdminId",
     "modifiedDate",
     "name",
-    "parentId",
     "profiles",
     "roles"
   ],

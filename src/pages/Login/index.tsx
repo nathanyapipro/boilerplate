@@ -11,6 +11,7 @@ import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import { formatErrorMessage } from "../../helpers/api";
 import { Theme } from "@material-ui/core";
+import { getLocalStorageAuthUuid } from "../../helpers/auth";
 
 interface ReduxStateProps {
   apiCall: ApiCall;
@@ -64,7 +65,10 @@ function LoginBase(props: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.login({ email, password });
+    const uuid = getLocalStorageAuthUuid();
+    if (uuid) {
+      props.login({ email, password, uuid });
+    }
   };
 
   React.useEffect(() => {

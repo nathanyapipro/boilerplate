@@ -7,13 +7,14 @@ import {
 } from "..";
 import { actions as authActions } from "../auth/actions";
 import * as Api from "../../services/api";
-import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import { ThunkDispatch } from "redux-thunk";
 import {
   setLocalStorageAuthCredentials,
   clearLocalStorageAuthCredentials
 } from "../../helpers/auth";
 import { validateBySchema } from "../../helpers/validators";
+import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
+import ApiGetFirmwaresResponseSchema from "../../schemas/api/ApiGetFirmwaresResponse";
 // import { push } from "connected-react-router";
 import { AxiosError } from "axios";
 
@@ -27,7 +28,12 @@ export const actions = {
     "api/LOGOUT_REQUEST",
     "api/LOGOUT_SUCCESS",
     "api/LOGOUT_FAILURE"
-  )<void, Api.ApiLogoutResponse, AxiosError>()
+  )<void, Api.ApiLogoutResponse, AxiosError>(),
+  getFirmwares: createAsyncAction(
+    "api/GET_FIRMWARES_REQUEST",
+    "api/GET_FIRMWARES_SUCCESS",
+    "api/GET_FIRMWARES_FAILURE"
+  )<void, Api.ApiGetFirmwaresResponse, AxiosError>()
 };
 
 function handleInstanceOfHttpStatusUnauthorizedOrForbidden(
@@ -77,4 +83,19 @@ export const logout: ThunkActionCreator = () => async (
   }
   clearLocalStorageAuthCredentials();
   dispatch(actions.logout.success());
+};
+
+export const getFirmwares: ThunkActionCreator<
+  Api.ApiGetFirmwaresResponse
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.login.request());
+
+  try {
+    const response = await apiClient.getFirmwares();
+    validateBySchema(ApiGetFirmwaresResponseSchema, response);
+    dispatch(actions.getFirmwares.success(response));
+  } catch (err) {
+    dispatch(actions.getFirmwares.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
 };

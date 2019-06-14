@@ -1,6 +1,6 @@
 import { ActionType, getType } from "typesafe-actions";
 import { actions as apiActions } from "../api/actions";
-import { User } from "../../types/models";
+import { User, Firmware } from "../../types/models";
 import { getLocalStorageAuthCredentials } from "../../helpers/auth";
 import { ById } from "../../types";
 
@@ -11,6 +11,7 @@ export interface NormalizedModel<T> {
 
 export interface CacheState {
   users: NormalizedModel<User>;
+  firmwares: NormalizedModel<Firmware>;
 }
 
 interface HasId {
@@ -54,7 +55,8 @@ const INITIAL_STATE = {
         },
         allIds: [credentials.id]
       }
-    : INITIAL_ENTITY_STATE
+    : INITIAL_ENTITY_STATE,
+  firmwares: INITIAL_ENTITY_STATE
 };
 
 export function cache(
@@ -63,21 +65,21 @@ export function cache(
 ): CacheState {
   switch (action.type) {
     case getType(apiActions.login.success): {
-      const { ...user } = action.payload;
+      const user = action.payload;
 
       return {
         ...state,
         users: batchUpdate(state.users, [user])
       };
     }
-    // case getType(apiActions.getUsers.success): {
-    // 	const { data } = action.payload;
+    case getType(apiActions.getFirmwares.success): {
+      const firmwares = action.payload;
 
-    // 	return {
-    // 		...state,
-    // 		users: batchUpdate(state.users, data)
-    // 	};
-    // }
+      return {
+        ...state,
+        firmwares: batchUpdate(state.firmwares, firmwares)
+      };
+    }
     default:
       return state;
   }

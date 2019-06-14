@@ -125,13 +125,13 @@ export async function initStore(): Promise<InitStore> {
     )
   );
 
-  // if (
-  // 	process.env.NODE_ENV !== "production" &&
-  // 	process.env.REACT_APP_API_MOCK_ENABLED === "true"
-  // ) {
-  // 	const mockApiModule = await import("../services/__mocks__/api");
-  // 	mockApiModule.mockAxios(axiosInstance, store);
-  // }
+  if (
+    process.env.NODE_ENV !== "production" &&
+    process.env.REACT_APP_API_MOCK_ENABLED === "true"
+  ) {
+    const mockApiModule = await import("../services/__mocks__/api");
+    mockApiModule.mockAxios(axiosInstance, store);
+  }
 
   const credentials = getLocalStorageAuthCredentials();
   if (credentials && credentials.appToken) {

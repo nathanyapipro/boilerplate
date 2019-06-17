@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: `0px ${theme.spacing(2)}px`
   },
   title: {
-    padding: theme.spacing(1),
     fontWeight: 600
   }
 }));

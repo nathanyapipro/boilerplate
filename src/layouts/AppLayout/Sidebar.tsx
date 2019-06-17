@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
-import CategoryIcon from "@material-ui/icons/Category";
-import ColorizeIcon from "@material-ui/icons/Colorize";
+import LocationCityIcon from "@material-ui/icons/LocationCity";
+import OpacityIcon from "@material-ui/icons/Opacity";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
 interface OwnProps {}
@@ -105,10 +105,10 @@ function SidebarBase(props: Props) {
         <DeveloperBoardIcon className={classes.icon} />
       </NavLink>
       <NavLink to="/mts" className={classes.link}>
-        <CategoryIcon className={classes.icon} />
+        <LocationCityIcon className={classes.icon} />
       </NavLink>
       <NavLink to="/fts" className={classes.link}>
-        <ColorizeIcon className={classes.icon} />
+        <OpacityIcon className={classes.icon} />
       </NavLink>
       <div className={classes.spacer} />
       <NavLink to="/profiles" className={classes.link}>

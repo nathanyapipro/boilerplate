@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 interface OwnProps {}
 
 interface ReduxStateProps {
-  firwareIds: Array<number>;
+  firmwareIds: Array<number>;
   apiCall: ApiCall;
 }
 
@@ -33,9 +33,9 @@ type Props = OwnProps & ReduxStateProps;
 function TableDeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { firwareIds, apiCall } = props;
+  const { firmwareIds, apiCall } = props;
 
-  if (firwareIds.length === 0 && apiCall.status === RequestStatus.SUCCESS) {
+  if (firmwareIds.length === 0 && apiCall.status === RequestStatus.SUCCESS) {
     return (
       <Table className={classes.table}>
         <Head />
@@ -61,7 +61,7 @@ function TableDeviceFirmwareBase(props: Props) {
             </TableCell>
           </TableRow>
         ) : (
-          firwareIds.map(id => <Row key={id} id={id} />)
+          firmwareIds.map(id => <Row key={id} id={id} />)
         )}
       </TableBody>
     </Table>
@@ -69,11 +69,11 @@ function TableDeviceFirmwareBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const { allIds: firwareIds } = state.cache.firmwares;
+  const { firmwareIds } = state.fms.device;
   const apiCall = state.api.getFirmwares;
 
   return {
-    firwareIds,
+    firmwareIds,
     apiCall
   };
 };

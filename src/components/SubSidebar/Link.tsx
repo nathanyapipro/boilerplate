@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flex: "0 1 auto",
     minWidth: 0,
-    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.5)}px`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(2)}px`,
 
     "&.active": {
       "&> $content": {

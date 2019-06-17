@@ -6,21 +6,21 @@
     "version": "AG0.01.8",
     "url": "\nhttps://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com/cms/app_dfu_package.zip",
     "deleted": false,
-    "publishedDate": "2019-06-14T19:18:22.481Z",
+    "publishedDate": "2019-06-17T18:32:19.108Z",
     "lastModifiedAdminId": 1,
-    "createdDate": "2019-06-14T19:18:22.481Z",
-    "modifiedDate": "2019-06-14T19:18:22.481Z"
+    "createdDate": "2019-06-17T18:32:19.108Z",
+    "modifiedDate": "2019-06-17T18:32:19.108Z"
   },
   "2": {
     "id": 2,
-    "description": "Initial",
+    "description": "Architecto ut in atque autem. Non at necessitatibus iure. Qui dicta est corporis aspernatur quibusdam et sint et nam. Qui et repudiandae cum deleniti minima ex omnis et velit. Error perferendis velit ut sapiente atque ipsam aspernatur quos.",
     "model": "Airgraft001",
     "version": "AG0.01.3",
     "url": "\nhttps://s3.ca-central-1.amazonaws.com/elasticbeanstalk-ca-central-1-761850581753/airgraft_dfu_AG0.01.3.zip",
     "deleted": false,
-    "publishedDate": "2019-06-14T19:18:22.481Z",
+    "publishedDate": "2019-06-17T18:32:19.109Z",
     "lastModifiedAdminId": 1,
-    "createdDate": "2019-06-14T19:18:22.481Z",
-    "modifiedDate": "2019-06-14T19:18:22.481Z"
+    "createdDate": "2019-06-17T18:32:19.109Z",
+    "modifiedDate": "2019-06-17T18:32:19.109Z"
   }
 }

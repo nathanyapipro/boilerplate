@@ -16,9 +16,9 @@ function FirmwareBase(_: Props) {
 
   return (
     <React.Fragment>
-      <Header title="Content Manager" />
+      <Header title="Firmware Manager" />
 
-      <Link path="/firmware/devices" label="Devices" icon={CropSquareIcon} />
+      <Link path="/firmware/device" label="Device" icon={CropSquareIcon} />
     </React.Fragment>
   );
 }

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: `${theme.spacing(3)}px 0px ${theme.spacing(2)}px 0px`
+    margin: `${theme.spacing(4)}px 0px ${theme.spacing(3)}px 0px`
   },
   logo: {
     display: "flex",

@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const DeviceFirmware = React.lazy(() => import("../pages/DeviceFirmware"));
 
 function AppRouter() {
   return (
@@ -12,7 +13,7 @@ function AppRouter() {
         <Route path="/cms/pods" exact component={Home} />
         <Route path="/cms/oils" exact component={Home} />
         <Route path="/cms/farmers" exact component={Home} />
-        <Route path="/firmware/devices" exact component={Home} />
+        <Route path="/firmware/device" exact component={DeviceFirmware} />
         <Route path="/mts/afm" exact component={Home} />
         <Route path="/mts/devices" exact component={Home} />
         <Route path="/mts/pods" exact component={Home} />

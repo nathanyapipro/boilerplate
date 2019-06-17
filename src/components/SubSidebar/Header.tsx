@@ -12,7 +12,7 @@ type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
     display: "flex",
-    height: theme.spacing(10),
+    height: theme.spacing(12),
     alignItems: "center",
     padding: `0px ${theme.spacing(2)}px`
   },

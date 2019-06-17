@@ -1,3 +1,4 @@
+import faker from "faker";
 import { ById } from "../../types/index";
 import { Firmware } from "../../types/models";
 
@@ -18,7 +19,7 @@ https://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com
     },
     "2": {
       id: 2,
-      description: "Initial",
+      description: faker.lorem.sentences(),
       model: "Airgraft001",
       version: "AG0.01.3",
       url: `

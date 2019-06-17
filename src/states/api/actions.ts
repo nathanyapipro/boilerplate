@@ -96,9 +96,11 @@ export const logout: ThunkActionCreator = () => async (
   dispatch(actions.logout.success());
 };
 
-export const getFirmwares: ThunkActionCreator<
-  Api.ApiGetFirmwaresResponse
-> = () => async (dispatch, _, { apiClient }) => {
+export const getFirmwares: ThunkActionCreator<void> = () => async (
+  dispatch,
+  _,
+  { apiClient }
+) => {
   dispatch(actions.login.request());
 
   try {
@@ -111,9 +113,9 @@ export const getFirmwares: ThunkActionCreator<
   }
 };
 
-export const postFirmware: ThunkActionCreator<Api.ApiPostFirmwareResponse> = (
-  input: Api.ApiPostFirmwareParams
-) => async (dispatch, _, { apiClient }) => {
+export const postFirmware: ThunkActionCreator<
+  Api.ApiPostFirmwareParams
+> = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.login.request());
 
   try {
@@ -126,9 +128,9 @@ export const postFirmware: ThunkActionCreator<Api.ApiPostFirmwareResponse> = (
   }
 };
 
-export const putFirmware: ThunkActionCreator<Api.ApiPutFirmwareResponse> = (
-  input: Api.ApiPutFirmwareParams & HasId
-) => async (dispatch, _, { apiClient }) => {
+export const putFirmware: ThunkActionCreator<
+  Api.ApiPutFirmwareParams & HasId
+> = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.login.request());
 
   const { id, ...params } = input;

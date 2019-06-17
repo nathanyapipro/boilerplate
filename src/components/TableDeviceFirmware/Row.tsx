@@ -1,13 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import {
-  TableRow,
-  TableCell,
-  Theme,
-  Typography,
-  IconButton
-} from "@material-ui/core";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Typography from "@material-ui/core/Typography";
+import { Theme } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 import { Firmware } from "../../types/models";
 import * as dateHelper from "../../helpers/date";
 import { StoreState } from "../../states";

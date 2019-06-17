@@ -1,12 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography
-} from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Typography from "@material-ui/core/Typography";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import Head from "./Head";

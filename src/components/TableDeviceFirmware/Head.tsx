@@ -1,5 +1,8 @@
 import * as React from "react";
-import { TableHead, TableRow, TableCell, Typography } from "@material-ui/core";
+import TableHead from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Typography from "@material-ui/core/Typography";
 
 type Props = {};
 

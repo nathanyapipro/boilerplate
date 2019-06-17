@@ -11,21 +11,18 @@ type Props = OwnProps;
 
 // const useStyles = makeStyles((_: Theme) => ({}));
 
-function CMSBase(_: Props) {
+function FirmwareBase(_: Props) {
   // const classes = useStyles();
 
   return (
     <React.Fragment>
       <Header title="Content Manager" />
 
-      <Link path="/cms/devices" label="Devices" icon={CropSquareIcon} />
-      <Link path="/cms/pods" label="Pods" icon={CropSquareIcon} />
-      <Link path="/cms/oils" label="Oils" icon={CropSquareIcon} />
-      <Link path="/cms/farmers" label="Farmers" icon={CropSquareIcon} />
+      <Link path="/firmware/devices" label="Devices" icon={CropSquareIcon} />
     </React.Fragment>
   );
 }
 
-const CMS = CMSBase;
+const Firmware = FirmwareBase;
 
-export default CMS;
+export default Firmware;

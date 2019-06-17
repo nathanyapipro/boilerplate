@@ -11,21 +11,18 @@ type Props = OwnProps;
 
 // const useStyles = makeStyles((_: Theme) => ({}));
 
-function CMSBase(_: Props) {
+function MTSBase(_: Props) {
   // const classes = useStyles();
 
   return (
     <React.Fragment>
-      <Header title="Content Manager" />
+      <Header title="Filling Tracker" />
 
-      <Link path="/cms/devices" label="Devices" icon={CropSquareIcon} />
-      <Link path="/cms/pods" label="Pods" icon={CropSquareIcon} />
-      <Link path="/cms/oils" label="Oils" icon={CropSquareIcon} />
-      <Link path="/cms/farmers" label="Farmers" icon={CropSquareIcon} />
+      {/* <Link path="/mts/afm" label="AFM" icon={CropSquareIcon} /> */}
     </React.Fragment>
   );
 }
 
-const CMS = CMSBase;
+const MTS = MTSBase;
 
-export default CMS;
+export default MTS;

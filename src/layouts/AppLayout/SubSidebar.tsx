@@ -4,6 +4,10 @@ import { Theme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { StoreState } from "../../states";
 import CMSSubSidebar from "../../components/SubSidebar/CMS";
+import FirmwareSubSidebar from "../../components/SubSidebar/Firmware";
+import MTSSubSidebar from "../../components/SubSidebar/MTS";
+import FTSSubSidebar from "../../components/SubSidebar/FTS";
+import ProfilesSubSidebar from "../../components/SubSidebar/Profiles";
 
 interface OwnProps {}
 
@@ -32,15 +36,48 @@ function SubSidebarBase(props: Props) {
   const renderSubSiderbar = () => {
     switch (section) {
       case "cms": {
-        return <CMSSubSidebar />;
+        return (
+          <div className={classes.container}>
+            <CMSSubSidebar />
+          </div>
+        );
       }
+      case "firmware": {
+        return (
+          <div className={classes.container}>
+            <FirmwareSubSidebar />
+          </div>
+        );
+      }
+      case "mts": {
+        return (
+          <div className={classes.container}>
+            <MTSSubSidebar />
+          </div>
+        );
+      }
+      case "fts": {
+        return (
+          <div className={classes.container}>
+            <FTSSubSidebar />
+          </div>
+        );
+      }
+      case "profiles": {
+        return (
+          <div className={classes.container}>
+            <ProfilesSubSidebar />
+          </div>
+        );
+      }
+
       default: {
         return <noscript />;
       }
     }
   };
 
-  return <div className={classes.container}>{renderSubSiderbar()}</div>;
+  return <React.Fragment>{renderSubSiderbar()}</React.Fragment>;
 }
 
 const mapStateToProps = (state: StoreState) => {

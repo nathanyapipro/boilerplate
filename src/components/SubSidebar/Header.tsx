@@ -1,0 +1,41 @@
+import * as React from "react";
+import { makeStyles } from "@material-ui/styles";
+import { Theme } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+
+interface OwnProps {
+  title: string;
+}
+
+type Props = OwnProps;
+
+const useStyles = makeStyles((theme: Theme) => ({
+  header: {
+    display: "flex",
+    height: theme.spacing(10),
+    alignItems: "center",
+    padding: `0px ${theme.spacing(2)}px`
+  },
+  title: {
+    padding: theme.spacing(1),
+    fontWeight: 600
+  }
+}));
+
+function HeaderBase(props: Props) {
+  const classes = useStyles();
+
+  const { title } = props;
+
+  return (
+    <div className={classes.header}>
+      <Typography variant="body2" color="textPrimary" className={classes.title}>
+        {title}
+      </Typography>
+    </div>
+  );
+}
+
+const Header = HeaderBase;
+
+export default Header;

@@ -1,12 +1,13 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Theme } from "@material-ui/core/styles";
-import WallpaperIcon from "@material-ui/icons/Wallpaper";
-import CategoryIcon from "@material-ui/icons/Category";
-import ColorizeIcon from "@material-ui/icons/Colorize";
-import SettingsIcon from "@material-ui/icons/Settings";
 import { NavLink } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import WallpaperIcon from "@material-ui/icons/Wallpaper";
+import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
+import CategoryIcon from "@material-ui/icons/Category";
+import ColorizeIcon from "@material-ui/icons/Colorize";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
 interface OwnProps {}
 
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     height: theme.spacing(7),
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.disabled,
     backgroundColor: "inherit",
 
     "&.active": {
@@ -100,6 +101,9 @@ function SidebarBase(props: Props) {
       <NavLink to="/cms" className={classes.link}>
         <WallpaperIcon className={classes.icon} />
       </NavLink>
+      <NavLink to="/firmware" className={classes.link}>
+        <DeveloperBoardIcon className={classes.icon} />
+      </NavLink>
       <NavLink to="/mts" className={classes.link}>
         <CategoryIcon className={classes.icon} />
       </NavLink>
@@ -107,8 +111,8 @@ function SidebarBase(props: Props) {
         <ColorizeIcon className={classes.icon} />
       </NavLink>
       <div className={classes.spacer} />
-      <NavLink to="/settings" className={classes.link}>
-        <SettingsIcon className={classes.icon} />
+      <NavLink to="/profiles" className={classes.link}>
+        <SupervisedUserCircleIcon className={classes.icon} />
       </NavLink>
     </div>
   );

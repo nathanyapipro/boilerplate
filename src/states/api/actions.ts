@@ -15,8 +15,11 @@ import {
 import { validateBySchema } from "../../helpers/validators";
 import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetFirmwaresResponseSchema from "../../schemas/api/ApiGetFirmwaresResponse";
+import ApiPostFirmwareResponseSchema from "../../schemas/api/ApiPostFirmwareResponse";
+import ApiPutFirmwareResponseSchema from "../../schemas/api/ApiPutFirmwareResponse";
 // import { push } from "connected-react-router";
 import { AxiosError } from "axios";
+import { HasId } from "../../types";
 
 export const actions = {
   login: createAsyncAction(
@@ -33,7 +36,17 @@ export const actions = {
     "api/GET_FIRMWARES_REQUEST",
     "api/GET_FIRMWARES_SUCCESS",
     "api/GET_FIRMWARES_FAILURE"
-  )<void, Api.ApiGetFirmwaresResponse, AxiosError>()
+  )<void, Api.ApiGetFirmwaresResponse, AxiosError>(),
+  postFirmware: createAsyncAction(
+    "api/POST_FIRMWARE_REQUEST",
+    "api/POST_FIRMWARE_SUCCESS",
+    "api/POST_FIRMWARE_FAILURE"
+  )<void, Api.ApiPostFirmwareResponse, AxiosError>(),
+  putFirmware: createAsyncAction(
+    "api/PUT_FIRMWARE_REQUEST",
+    "api/PUT_FIRMWARE_SUCCESS",
+    "api/PUT_FIRMWARE_FAILURE"
+  )<void, Api.ApiPutFirmwareResponse, AxiosError>()
 };
 
 function handleInstanceOfHttpStatusUnauthorizedOrForbidden(
@@ -51,11 +64,9 @@ function handleInstanceOfHttpStatusUnauthorizedOrForbidden(
   }
 }
 
-export const login: ThunkActionCreator<Api.ApiLoginParams> = input => async (
-  dispatch,
-  _,
-  { apiClient }
-) => {
+export const login: ThunkActionCreator<Api.ApiLoginParams> = (
+  input: Api.ApiLoginParams
+) => async (dispatch, _, { apiClient }) => {
   dispatch(actions.login.request());
 
   try {
@@ -87,7 +98,7 @@ export const logout: ThunkActionCreator = () => async (
 
 export const getFirmwares: ThunkActionCreator<
   Api.ApiGetFirmwaresResponse
-> = input => async (dispatch, _, { apiClient }) => {
+> = () => async (dispatch, _, { apiClient }) => {
   dispatch(actions.login.request());
 
   try {
@@ -96,6 +107,38 @@ export const getFirmwares: ThunkActionCreator<
     dispatch(actions.getFirmwares.success(response));
   } catch (err) {
     dispatch(actions.getFirmwares.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const postFirmware: ThunkActionCreator<Api.ApiPostFirmwareResponse> = (
+  input: Api.ApiPostFirmwareParams
+) => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.login.request());
+
+  try {
+    const response = await apiClient.postFirmware(input);
+    validateBySchema(ApiPostFirmwareResponseSchema, response);
+    dispatch(actions.postFirmware.success(response));
+  } catch (err) {
+    dispatch(actions.postFirmware.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const putFirmware: ThunkActionCreator<Api.ApiPutFirmwareResponse> = (
+  input: Api.ApiPutFirmwareParams & HasId
+) => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.login.request());
+
+  const { id, ...params } = input;
+
+  try {
+    const response = await apiClient.putFirmware(id, params);
+    validateBySchema(ApiPutFirmwareResponseSchema, response);
+    dispatch(actions.putFirmware.success(response));
+  } catch (err) {
+    dispatch(actions.putFirmware.failure(err));
     handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
   }
 };

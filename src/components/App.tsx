@@ -27,16 +27,20 @@ const useGlobalStyles = makeStyles((theme: Theme) => ({
     "#root": {
       display: "flex",
       flex: 1
+    },
+    a: {
+      color: "inherit" /* blue colors for links too */,
+      textDecoration: "inherit" /* no underline */
     }
   }
 }));
 
-interface AppProps {
+interface OwnProps {
   store: Store<StoreState>;
   history: History;
 }
 
-type Props = AppProps;
+type Props = OwnProps;
 
 function AppBase({ store, history }: Props) {
   useGlobalStyles();

@@ -263,6 +263,33 @@ export class ApiClient {
     return response.data;
   }
 
+  async postFirmware(
+    params: ApiPostFirmwareParams
+  ): Promise<ApiPostFirmwareResponse> {
+    const url = `/cms/firmware`;
+    const config = this.getConfig();
+    const response = await this.axiosInstance.post<ApiPostFirmwareResponse>(
+      url,
+      JSON.stringify(params),
+      config
+    );
+    return response.data;
+  }
+
+  async putFirmware(
+    id: number,
+    params: ApiPutFirmwareParams
+  ): Promise<ApiPutFirmwareResponse> {
+    const url = `/cms/firmware/${id}`;
+    const config = this.getConfig();
+    const response = await this.axiosInstance.put<ApiPutFirmwareResponse>(
+      url,
+      JSON.stringify(params),
+      config
+    );
+    return response.data;
+  }
+
   async logout(): Promise<ApiLogoutResponse> {
     const url = `/cms/account/logout`;
     const response = await this.axiosInstance.post<ApiLogoutResponse>(url);

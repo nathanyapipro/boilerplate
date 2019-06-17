@@ -4,11 +4,11 @@ import { Theme } from "@material-ui/core/styles";
 import Sidebar from "./Sidebar";
 import SubSidebar from "./SubSidebar";
 
-interface AppLayoutProps {
+interface OwnProps {
   children: React.ReactNode;
 }
 
-type Props = AppLayoutProps;
+type Props = OwnProps;
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {

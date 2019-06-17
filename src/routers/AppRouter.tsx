@@ -8,8 +8,8 @@ function AppRouter() {
   return (
     <AppLayout>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Redirect to="/" />
+        <Route path="/cms/devices" exact component={Home} />
+        <Redirect to="/cms/devices" />
       </Switch>
     </AppLayout>
   );

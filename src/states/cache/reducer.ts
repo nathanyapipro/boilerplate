@@ -80,6 +80,15 @@ export function cache(
         firmwares: batchUpdate(state.firmwares, firmwares)
       };
     }
+    case getType(apiActions.postFirmware.success):
+    case getType(apiActions.putFirmware.success): {
+      const firmware = action.payload;
+
+      return {
+        ...state,
+        firmwares: batchUpdate(state.firmwares, [firmware])
+      };
+    }
     default:
       return state;
   }

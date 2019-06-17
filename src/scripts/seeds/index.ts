@@ -12,7 +12,7 @@ const users = generateUsers();
 const serializedUsers = JSON.stringify(users);
 writeSeedsToFile(serializedUsers, CONFIG.dstPath, "users.json");
 
-// Generate submissions
+// Generate firmwares
 const firmwares = generateFirmware();
 const serializedFirmwares = JSON.stringify(firmwares);
 writeSeedsToFile(serializedFirmwares, CONFIG.dstPath, "firmwares.json");

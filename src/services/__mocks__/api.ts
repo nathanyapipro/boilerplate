@@ -49,6 +49,28 @@ export function mockAxios(
     }
   });
 
+  mock.onPost(/\/cms\/firmware$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = firmwareController.postFirmware(config, store.getState());
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onPut(/\/cms\/firmware\/[0-9]+$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = firmwareController.putFirmware(config, store.getState());
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
   // Unmatched responses are forwarded to network
   mock.onAny().passThrough();
 }

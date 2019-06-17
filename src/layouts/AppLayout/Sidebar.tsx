@@ -101,7 +101,7 @@ function SidebarBase(props: Props) {
       <NavLink to="/cms" className={classes.link}>
         <WallpaperIcon className={classes.icon} />
       </NavLink>
-      <NavLink to="/firmware" className={classes.link}>
+      <NavLink to="/fms" className={classes.link}>
         <DeveloperBoardIcon className={classes.icon} />
       </NavLink>
       <NavLink to="/mts" className={classes.link}>

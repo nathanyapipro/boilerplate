@@ -51,11 +51,7 @@ function DeviceFirmwareBase(props: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          className={classes.title}
-        >
+        <Typography variant="h6" color="textPrimary" className={classes.title}>
           Device Firmware
         </Typography>
         <Button color="primary" size="small" variant="contained">

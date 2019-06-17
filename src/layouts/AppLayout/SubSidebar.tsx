@@ -4,7 +4,7 @@ import { Theme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { StoreState } from "../../states";
 import CMSSubSidebar from "../../components/SubSidebar/CMS";
-import FirmwareSubSidebar from "../../components/SubSidebar/Firmware";
+import FMSSubSidebar from "../../components/SubSidebar/FMS";
 import MTSSubSidebar from "../../components/SubSidebar/MTS";
 import FTSSubSidebar from "../../components/SubSidebar/FTS";
 import ProfilesSubSidebar from "../../components/SubSidebar/Profiles";
@@ -42,10 +42,10 @@ function SubSidebarBase(props: Props) {
           </div>
         );
       }
-      case "firmware": {
+      case "fms": {
         return (
           <div className={classes.container}>
-            <FirmwareSubSidebar />
+            <FMSSubSidebar />
           </div>
         );
       }

@@ -17,7 +17,6 @@ import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetFirmwaresResponseSchema from "../../schemas/api/ApiGetFirmwaresResponse";
 import ApiPostFirmwareResponseSchema from "../../schemas/api/ApiPostFirmwareResponse";
 import ApiPutFirmwareResponseSchema from "../../schemas/api/ApiPutFirmwareResponse";
-// import { push } from "connected-react-router";
 import { AxiosError } from "axios";
 import { HasId } from "../../types";
 
@@ -101,7 +100,7 @@ export const getFirmwares: ThunkActionCreator<void> = () => async (
   _,
   { apiClient }
 ) => {
-  dispatch(actions.login.request());
+  dispatch(actions.getFirmwares.request());
 
   try {
     const response = await apiClient.getFirmwares();
@@ -116,7 +115,7 @@ export const getFirmwares: ThunkActionCreator<void> = () => async (
 export const postFirmware: ThunkActionCreator<
   Api.ApiPostFirmwareParams
 > = input => async (dispatch, _, { apiClient }) => {
-  dispatch(actions.login.request());
+  dispatch(actions.postFirmware.request());
 
   try {
     const response = await apiClient.postFirmware(input);
@@ -131,7 +130,7 @@ export const postFirmware: ThunkActionCreator<
 export const putFirmware: ThunkActionCreator<
   Api.ApiPutFirmwareParams & HasId
 > = input => async (dispatch, _, { apiClient }) => {
-  dispatch(actions.login.request());
+  dispatch(actions.putFirmware.request());
 
   const { id, ...params } = input;
 

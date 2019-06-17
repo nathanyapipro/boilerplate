@@ -29,7 +29,7 @@ function HeaderBase(props: Props) {
 
   return (
     <div className={classes.header}>
-      <Typography variant="body2" color="textPrimary" className={classes.title}>
+      <Typography variant="body1" color="textPrimary" className={classes.title}>
         {title}
       </Typography>
     </div>

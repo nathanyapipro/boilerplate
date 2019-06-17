@@ -27,7 +27,12 @@ export type ApiPostFirmwareResponse = Firmware;
 
 export type ApiPutFirmwareParams = Omit<
   Firmware,
-  "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
+  | "id"
+  | "createdDate"
+  | "modifiedDate"
+  | "lastModifiedAdminId"
+  | "deleted"
+  | "url"
 >;
 
 export type ApiPutFirmwareResponse = Firmware;

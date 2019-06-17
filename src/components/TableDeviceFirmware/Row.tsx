@@ -17,12 +17,18 @@ import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {
-    cursor: "pointer",
-    position: "relative"
+    position: "relative",
+    cursor: "default"
   },
   versionCell: {
+    display: "flex",
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+    height: "100%",
     color: theme.palette.primary.main,
-    textDecoration: "underline"
+    textDecoration: "underline",
+    cursor: "pointer"
   }
 }));
 

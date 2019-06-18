@@ -1,7 +1,5 @@
-// import { createStandardAction } from "typesafe-actions";
+import { createStandardAction } from "typesafe-actions";
 
 export const actions = {
-  // apiRequestUnauthorized: createStandardAction(
-  //   "auth/API_REQUEST_UNAUTHORIZED"
-  // )()
+  setPutId: createStandardAction("fms/DEVICE_SET_PUT_ID")<number | undefined>()
 };

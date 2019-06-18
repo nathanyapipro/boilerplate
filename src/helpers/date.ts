@@ -1,4 +1,4 @@
-import moment, { unitOfTime } from "moment";
+import moment from "moment";
 
 export const DEFAULT_STRING_FORMAT = "MMMM Do YYYY, h:mm a";
 export function format(

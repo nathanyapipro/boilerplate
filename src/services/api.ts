@@ -1,4 +1,8 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosError
+  // AxiosRequestConfig
+} from "axios";
 import * as retryAxios from "retry-axios";
 import { User, Firmware } from "../types/models";
 import { HttpStatusCode } from "../helpers/http";

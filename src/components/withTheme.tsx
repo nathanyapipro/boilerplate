@@ -2,9 +2,8 @@ import * as React from "react";
 import { createMuiTheme, CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import grey from "@material-ui/core/colors/grey";
-import shadows from "@material-ui/core/styles/shadows";
 
-const defaultTheme = createMuiTheme({});
+// const defaultTheme = createMuiTheme({});
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +22,7 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontSize: 13
+    fontSize: 14
   },
   overrides: {
     MuiTable: {

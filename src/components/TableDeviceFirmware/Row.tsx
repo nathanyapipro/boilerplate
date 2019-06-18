@@ -1,9 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
+// import { push } from "connected-react-router";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Typography from "@material-ui/core/Typography";
 import { Theme } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { Firmware } from "../../types/models";
@@ -12,6 +11,7 @@ import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { actions } from "../../states/fms/actions";
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {
@@ -34,7 +34,9 @@ interface ReduxStateProps {
   firmware: Firmware;
 }
 
-interface ReduxDispatchProps {}
+interface ReduxDispatchProps {
+  setPutId: (params?: number) => void;
+}
 
 interface OwnProps {
   id: number;
@@ -43,9 +45,13 @@ interface OwnProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const RowBase = function RowBase(props: Props) {
-  const { firmware } = props;
+  const { id, firmware, setPutId } = props;
 
   const classes = useStyles();
+
+  const handleEdit = () => {
+    setPutId(id);
+  };
 
   return (
     <TableRow className={classes.row} hover>
@@ -60,7 +66,7 @@ const RowBase = function RowBase(props: Props) {
       <TableCell>{dateHelper.format(firmware.publishedDate)}</TableCell>
       <TableCell>{dateHelper.format(firmware.modifiedDate)}</TableCell>
       <TableCell>
-        <IconButton>
+        <IconButton onClick={handleEdit}>
           <EditIcon />
         </IconButton>
         <IconButton>
@@ -84,7 +90,9 @@ const mapStateToProps = (state: StoreState, ownProps: OwnProps) => {
 const Row = React.memo(
   connect(
     mapStateToProps,
-    {}
+    {
+      setPutId: actions.setPutId
+    }
   )(RowBase)
 );
 

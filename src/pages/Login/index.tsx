@@ -90,14 +90,12 @@ function LoginBase(props: Props) {
         by Airgraft
       </Typography>
       <form autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
-        {apiCall.status === RequestStatus.FAILURE ? (
+        {apiCall.status === RequestStatus.FAILURE && (
           <div className={classes.error}>
             <Typography color="inherit">
               {formatErrorMessage(apiCall.error)}
             </Typography>
           </div>
-        ) : (
-          undefined
         )}
         <Typography variant="caption" color="textSecondary">
           Email

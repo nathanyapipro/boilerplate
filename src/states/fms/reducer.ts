@@ -5,7 +5,7 @@ import { actions as apiActions } from "../api/actions";
 
 export interface FMSState {
   device: {
-    selectedId?: number;
+    putId?: number;
     firmwareIds: number[];
   };
 }
@@ -23,6 +23,16 @@ export function fms(
   action: ActionType<typeof actions | typeof apiActions>
 ): FMSState {
   switch (action.type) {
+    case getType(actions.setPutId): {
+      const putId = action.payload;
+      return {
+        ...state,
+        device: {
+          ...state.device,
+          putId
+        }
+      };
+    }
     case getType(apiActions.getFirmwares.success):
       const firmwares = action.payload;
 

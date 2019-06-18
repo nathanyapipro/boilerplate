@@ -1,9 +1,9 @@
 import * as React from "react";
 // import { makeStyles } from "@material-ui/styles";
 // import { Theme } from "@material-ui/core/styles";
-import CropSquareIcon from "@material-ui/icons/CropSquare";
+// import CropSquareIcon from "@material-ui/icons/CropSquare";
 import Header from "./Header";
-import Link from "./Link";
+// import Link from "./Link";
 
 interface OwnProps {}
 

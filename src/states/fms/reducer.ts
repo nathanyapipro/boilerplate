@@ -43,6 +43,20 @@ export function fms(
           firmwareIds: firmwares.map((firmware: Firmware) => firmware.id)
         }
       };
+    case getType(apiActions.deleteFirmware.success):
+      const { ids } = action.payload;
+
+      const remainingIds = state.device.firmwareIds.filter(
+        id => ids.indexOf(id) === -1
+      );
+
+      return {
+        ...state,
+        device: {
+          ...state.device,
+          firmwareIds: remainingIds
+        }
+      };
     default:
       return state;
   }

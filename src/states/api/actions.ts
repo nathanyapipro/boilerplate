@@ -17,6 +17,7 @@ import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetFirmwaresResponseSchema from "../../schemas/api/ApiGetFirmwaresResponse";
 import ApiPostFirmwareResponseSchema from "../../schemas/api/ApiPostFirmwareResponse";
 import ApiPutFirmwareResponseSchema from "../../schemas/api/ApiPutFirmwareResponse";
+import ApiDeleteFirmwareResponseSchema from "../../schemas/api/ApiDeleteFirmwareResponse";
 import { AxiosError } from "axios";
 import { HasId } from "../../types";
 
@@ -45,7 +46,12 @@ export const actions = {
     "api/PUT_FIRMWARE_REQUEST",
     "api/PUT_FIRMWARE_SUCCESS",
     "api/PUT_FIRMWARE_FAILURE"
-  )<void, Api.ApiPutFirmwareResponse, AxiosError>()
+  )<void, Api.ApiPutFirmwareResponse, AxiosError>(),
+  deleteFirmware: createAsyncAction(
+    "api/DELETE_FIRMWARE_REQUEST",
+    "api/DELETE_FIRMWARE_SUCCESS",
+    "api/DELETE_FIRMWARE_FAILURE"
+  )<void, Api.ApiDeleteFirmwareResponse, AxiosError>()
 };
 
 function handleInstanceOfHttpStatusUnauthorizedOrForbidden(
@@ -140,6 +146,21 @@ export const putFirmware: ThunkActionCreator<
     dispatch(actions.putFirmware.success(response));
   } catch (err) {
     dispatch(actions.putFirmware.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const deleteFirmware: ThunkActionCreator<
+  Api.ApiDeleteFirmwareParams
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.deleteFirmware.request());
+
+  try {
+    const response = await apiClient.deleteFirmware(input);
+    validateBySchema(ApiDeleteFirmwareResponseSchema, response);
+    dispatch(actions.deleteFirmware.success(response));
+  } catch (err) {
+    dispatch(actions.deleteFirmware.failure(err));
     handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
   }
 };

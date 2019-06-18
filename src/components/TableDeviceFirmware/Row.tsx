@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-// import { push } from "connected-react-router";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import { Theme } from "@material-ui/core";
@@ -12,6 +11,8 @@ import { makeStyles } from "@material-ui/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { actions } from "../../states/fms/actions";
+import { deleteFirmware } from "../../states/api/actions";
+import { ApiDeleteFirmwareParams } from "../../services/api";
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {
@@ -36,6 +37,7 @@ interface ReduxStateProps {
 
 interface ReduxDispatchProps {
   setPutId: (params?: number) => void;
+  deleteFirmware: (params: ApiDeleteFirmwareParams) => void;
 }
 
 interface OwnProps {
@@ -45,12 +47,18 @@ interface OwnProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const RowBase = function RowBase(props: Props) {
-  const { id, firmware, setPutId } = props;
+  const { id, firmware, setPutId, deleteFirmware } = props;
 
   const classes = useStyles();
 
   const handleEdit = () => {
     setPutId(id);
+  };
+
+  const handleDelete = () => {
+    deleteFirmware({
+      ids: [id]
+    });
   };
 
   return (
@@ -69,7 +77,7 @@ const RowBase = function RowBase(props: Props) {
         <IconButton onClick={handleEdit}>
           <EditIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleDelete}>
           <DeleteIcon />
         </IconButton>
       </TableCell>
@@ -91,7 +99,8 @@ const Row = React.memo(
   connect(
     mapStateToProps,
     {
-      setPutId: actions.setPutId
+      setPutId: actions.setPutId,
+      deleteFirmware
     }
   )(RowBase)
 );

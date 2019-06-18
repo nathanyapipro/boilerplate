@@ -40,6 +40,27 @@ function batchUpdate<T extends HasId>(
   };
 }
 
+export function batchDelete<T extends HasId>(
+  initialState: NormalizedModel<T>,
+  toDeleteIds: number[]
+): NormalizedModel<T> {
+  const remainingIds = initialState.allIds.filter(
+    id => toDeleteIds.indexOf(id) === -1
+  );
+
+  const remainingById = remainingIds.reduce((acc, id) => {
+    return {
+      ...acc,
+      [id]: initialState.byId[id]
+    };
+  }, {});
+
+  return {
+    byId: remainingById,
+    allIds: remainingIds
+  };
+}
+
 const credentials = getLocalStorageAuthCredentials();
 
 const INITIAL_ENTITY_STATE = {
@@ -87,6 +108,13 @@ export function cache(
       return {
         ...state,
         firmwares: batchUpdate(state.firmwares, [firmware])
+      };
+    }
+    case getType(apiActions.deleteFirmware.success): {
+      const { ids } = action.payload;
+      return {
+        ...state,
+        firmwares: batchDelete(state.firmwares, ids)
       };
     }
     default:

@@ -71,6 +71,20 @@ export function mockAxios(
     }
   });
 
+  mock.onDelete(/\/cms\/firmware$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = firmwareController.deleteFirmware(
+        config,
+        store.getState()
+      );
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
   // Unmatched responses are forwarded to network
   mock.onAny().passThrough();
 }

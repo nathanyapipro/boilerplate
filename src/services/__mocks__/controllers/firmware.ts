@@ -5,7 +5,9 @@ import {
   ApiPostFirmwareResponse,
   ApiPostFirmwareParams,
   ApiPutFirmwareResponse,
-  ApiPutFirmwareParams
+  ApiPutFirmwareParams,
+  ApiDeleteFirmwareParams,
+  ApiDeleteFirmwareResponse
 } from "../../api";
 import { StoreState } from "../../../states";
 import firmwaresFixtures from "../../../fixtures/firmwares.json";
@@ -51,4 +53,13 @@ export function putFirmware(
     ...data,
     modifiedDate: new Date().toISOString()
   };
+}
+
+export function deleteFirmware(
+  requestConfig: AxiosRequestConfig,
+  _: StoreState
+): ApiDeleteFirmwareResponse {
+  const params = requestConfig.params as ApiDeleteFirmwareResponse;
+
+  return params;
 }

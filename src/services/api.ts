@@ -10,6 +10,10 @@ import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
 import "whatwg-fetch";
 
+interface DeleteParams {
+  ids: number[];
+}
+
 export interface ApiLoginParams {
   email: string;
   password: string;
@@ -40,6 +44,10 @@ export type ApiPutFirmwareParams = Omit<
 >;
 
 export type ApiPutFirmwareResponse = Firmware;
+
+export type ApiDeleteFirmwareParams = { ids: number[] };
+
+export type ApiDeleteFirmwareResponse = { ids: number[] };
 
 interface AxiosResponseError extends AxiosError {
   response: AxiosError["response"];
@@ -142,112 +150,6 @@ export class ApiClient {
       }
     };
   }
-  // http = <T>(request: RequestInfo): Promise<HttpResponse<T>> => {
-  //   console.log(request);
-  //   return new Promise((resolve, reject) => {
-  //     let response: Response;
-  //     let parsedResponse: HttpResponse<T>;
-  //     fetch(request)
-  //       .then(res => {
-  //         response = res;
-  //         return res.json();
-  //       })
-  //       .then(body => {
-  //         if (response.ok) {
-  //           parsedResponse = {
-  //             ...response,
-  //             parsedBody: body
-  //           };
-  //           resolve(parsedResponse);
-  //         } else {
-  //           reject(response);
-  //         }
-  //       })
-  //       .catch(err => {
-  //         reject(err);
-  //       });
-  //   });
-  // };
-  //
-  // getHeaders(): any {
-  //   const plateformKey = "3bf76fce64167acb7a67dcf696a0ba34";
-  //   const uuid = getLocalStorageAuthUuid();
-  //   const time = Math.floor(+new Date() / 1000) + "";
-  //   const arr = [plateformKey, time, uuid];
-  //   const temp = arr.sort().join("");
-  //   const apiKey = sha1(temp);
-
-  //   return {
-  //     Authorization: this.token,
-  //     "Accept-Language": "en",
-  //     "Content-Type": "application/json",
-  //     "Access-Control-Allow-Origin": "*",
-  //     apiKey: apiKey,
-  //     time: time,
-  //     uuid: uuid,
-  //     version: "cms1"
-  //   };
-  // }
-
-  // get = async <T>(
-  //   path: string,
-  //   args: RequestInit = {
-  //     method: "get",
-  //     mode: "no-cors",
-  //     redirect: "follow",
-  //     credentials: "include",
-  //     headers: {
-  //       ...this.getHeaders()
-  //     }
-  //   }
-  // ): Promise<HttpResponse<T>> => {
-  //   return await this.http<T>(new Request(path, args));
-  // };
-
-  // post = async <T>(
-  //   path: string,
-  //   body: any,
-  //   args: RequestInit = {
-  //     method: "post",
-  //     mode: "no-cors",
-  //     redirect: "follow",
-  //     credentials: "include",
-  //     body: JSON.stringify(body),
-  //     headers: {
-  //       ...this.getHeaders()
-  //     }
-  //   }
-  // ): Promise<HttpResponse<T>> => {
-  //   return await this.http<T>(new Request(path, args));
-  // };
-
-  // put = async <T>(
-  //   path: string,
-  //   body: any,
-  //   args: RequestInit = {
-  //     method: "put",
-  //     mode: "no-cors",
-  //     redirect: "follow",
-  //     credentials: "include",
-  //     body: JSON.stringify(body),
-  //     headers: {
-  //       ...this.getHeaders()
-  //     }
-  //   }
-  // ): Promise<HttpResponse<T>> => {
-  //   return await this.http<T>(new Request(path, args));
-  // };
-
-  // async login(params: ApiLoginParams): Promise<ApiLoginResponse> {
-  //   const response = await this.post<ApiLoginResponse>(
-  //     `${this.urlBase}/cms/account/login`,
-  //     params
-  //   );
-
-  //   const data = response.parsedBody;
-  //   this.setAuthorizationHeader(data.appToken);
-  //   return data;
-  // }
 
   async login(params: ApiLoginParams): Promise<ApiLoginResponse> {
     const url = `/cms/account/login`;
@@ -259,6 +161,13 @@ export class ApiClient {
     );
     const { appToken } = response.data;
     this.setAuthorizationHeader(appToken);
+    return response.data;
+  }
+
+  async logout(): Promise<ApiLogoutResponse> {
+    const url = `/cms/account/logout`;
+    const response = await this.axiosInstance.post<ApiLogoutResponse>(url);
+    this.removeAuthorizationHeader();
     return response.data;
   }
 
@@ -299,10 +208,15 @@ export class ApiClient {
     return response.data;
   }
 
-  async logout(): Promise<ApiLogoutResponse> {
-    const url = `/cms/account/logout`;
-    const response = await this.axiosInstance.post<ApiLogoutResponse>(url);
-    this.removeAuthorizationHeader();
+  async deleteFirmware(
+    params: ApiDeleteFirmwareParams
+  ): Promise<ApiDeleteFirmwareResponse> {
+    const url = `/cms/firmware`;
+    const config = { ...this.getConfig(), params };
+    const response = await this.axiosInstance.delete<ApiDeleteFirmwareResponse>(
+      url,
+      config
+    );
     return response.data;
   }
 }

@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
-// import Loading from "../../components/Loading";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import { Theme } from "@material-ui/core";
 import { Firmware } from "../../types/models";
@@ -115,7 +114,6 @@ function UpdateDialogBase(props: Props) {
         publishedDate: initialData.publishedDate,
         ...values
       });
-      // handleClose();
     }
   };
 

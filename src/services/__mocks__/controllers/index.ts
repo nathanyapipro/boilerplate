@@ -1,6 +1,7 @@
 import { matchPath, match as matchType } from "react-router";
 import { AxiosRequestConfig } from "axios";
-// import { HasId } from "../../../types";
+import { HasId } from "../../../types";
+import { Pagination } from "../../types/models";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "localhost:8080";
 export function getParamsfromRequest<T>(
@@ -34,24 +35,20 @@ export function getModelIdFromRequest(
   return match.params.modelId;
 }
 
-// interface Cursors {
-//   previous?: string;
-//   next?: string;
-// }
-//
-// export function generateCursors<T extends HasId>(
-//   items: Array<T>,
-//   cursorPos: number,
-//   pageSize: number
-// ): Cursors {
-//   const previous =
-//     cursorPos - pageSize < 0 ? undefined : btoa(items[cursorPos - pageSize].id);
-//   const next =
-//     cursorPos + pageSize >= items.length
-//       ? undefined
-//       : btoa(items[cursorPos + pageSize].id);
-//   return {
-//     previous,
-//     next
-//   };
-// }
+export function generatePagination<T extends HasId>(
+  items: Array<T>,
+  page: number,
+  size: number,
+  sort?: string
+): Pagination {
+  const previous =
+    cursorPos - pageSize < 0 ? undefined : btoa(items[cursorPos - pageSize].id);
+  const next =
+    cursorPos + pageSize >= items.length
+      ? undefined
+      : btoa(items[cursorPos + pageSize].id);
+  return {
+    previous,
+    next
+  };
+}

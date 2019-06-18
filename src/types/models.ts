@@ -4,25 +4,28 @@ interface ModelBase {
   modifiedDate: any;
 }
 
-export interface Paginated<T> {
-  endRow: number;
+export interface Pagination {
+  endRow?: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  list: T[];
+  isFirstPage?: boolean;
+  isLastPage?: boolean;
   navigateFirstPage: number;
   navigateLastPage: number;
-  navigatePages: number;
-  navigatePageNums: number[];
+  navigatePages?: number;
+  navigatePageNums?: number[];
   nextPage: number;
+  prePage: number;
   pageNum: number;
   pageSize: number;
   pages: number;
-  prePage: number;
   size: number;
-  startRow: number;
+  startRow?: number;
   total: number;
+}
+
+export interface Paginated<T> extends Pagination {
+  list: T[];
 }
 
 export interface UserBase extends ModelBase {

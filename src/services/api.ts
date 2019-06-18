@@ -4,7 +4,7 @@ import axios, {
   // AxiosRequestConfig
 } from "axios";
 import * as retryAxios from "retry-axios";
-import { User, Firmware } from "../types/models";
+import { Paginated, User, Firmware } from "../types/models";
 import { HttpStatusCode } from "../helpers/http";
 import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
@@ -20,7 +20,7 @@ export type ApiLoginResponse = User;
 
 export type ApiLogoutResponse = undefined;
 
-export type ApiGetFirmwaresResponse = Firmware[];
+export type ApiGetFirmwaresResponse = Paginated<Firmware>;
 
 export type ApiPostFirmwareParams = Omit<
   Firmware,

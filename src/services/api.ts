@@ -10,15 +10,11 @@ import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
 import "whatwg-fetch";
 
-interface DeleteParams {
-  ids: number[];
-}
-
-export interface ApiLoginParams {
+export type ApiLoginParams = {
   email: string;
   password: string;
   uuid: string;
-}
+};
 
 export type ApiLoginResponse = User;
 

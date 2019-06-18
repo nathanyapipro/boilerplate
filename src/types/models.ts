@@ -4,6 +4,27 @@ interface ModelBase {
   modifiedDate: any;
 }
 
+export interface Paginated<T> {
+  endRow: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  list: T[];
+  navigateFirstPage: number;
+  navigateLastPage: number;
+  navigatePages: number;
+  navigatePageNums: number[];
+  nextPage: number;
+  pageNum: number;
+  pageSize: number;
+  pages: number;
+  prePage: number;
+  size: number;
+  startRow: number;
+  total: number;
+}
+
 export interface UserBase extends ModelBase {
   appToken: string;
   email: string;
@@ -12,7 +33,7 @@ export interface UserBase extends ModelBase {
 export interface UserProfile {
   id: number;
   name: string;
-  profiletype: string;
+  profileType: string;
 }
 
 export interface UserRole extends ModelBase {
@@ -37,6 +58,24 @@ export interface DeviceManufacturer extends ModelBase {
   description: string;
   imageUrl: string;
   lastModifiedAdmin: string;
+}
+
+export interface DeviceModel extends ModelBase {
+  modelNumber: string;
+  hardwareRevision: string;
+  colorNumber: string;
+  imageUrl: string;
+  lastModifiedAdminId: number;
+}
+
+export interface Firmware extends ModelBase {
+  description: string;
+  model: string;
+  publishedDate: string;
+  url: string;
+  version: string;
+  deleted: boolean;
+  lastModifiedAdminId: number;
 }
 
 export interface PodManufacturer extends ModelBase {
@@ -101,13 +140,4 @@ export interface PodProduction extends ModelBase {
   stageResult: string;
   utcTimeInfo: string;
   vacuumTest: string;
-}
-export interface Firmware extends ModelBase {
-  description: string;
-  model: string;
-  publishedDate: string;
-  url: string;
-  version: string;
-  deleted: boolean;
-  lastModifiedAdminId: number;
 }

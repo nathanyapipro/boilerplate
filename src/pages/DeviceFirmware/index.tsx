@@ -8,7 +8,7 @@ import { Theme } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { getFirmwares } from "../../states/api/actions";
 import TableDeviceFirmware from "../../components/TableDeviceFirmware";
-import UpdateDeviceFirmwareDialog from "../../forms/DeviceFirmware/Update";
+import UpdateDeviceFirmwareModal from "../../modals/DeviceFirmwareUpdate";
 
 interface ReduxStateProps {}
 
@@ -63,7 +63,7 @@ function DeviceFirmwareBase(props: Props) {
       <div className={classes.content}>
         <TableDeviceFirmware />
       </div>
-      <UpdateDeviceFirmwareDialog />
+      <UpdateDeviceFirmwareModal />
     </div>
   );
 }

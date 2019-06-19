@@ -29,11 +29,11 @@ export function crud(
       };
     }
     case getType(apiActions.getFirmwares.success):
-      const data = action.payload;
+      const { list } = action.payload;
 
       return {
         ...state,
-        ids: data.map(data => data.id)
+        ids: list.map((item: HasId) => item.id)
       };
     case getType(apiActions.deleteFirmware.success):
       const { ids } = action.payload;

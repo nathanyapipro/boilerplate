@@ -14,8 +14,8 @@ export interface Pagination {
   navigateLastPage: number;
   navigatePages?: number;
   navigatePageNums?: number[];
-  nextPage: number;
-  prePage: number;
+  nextPage?: number;
+  prePage?: number;
   pageNum: number;
   pageSize: number;
   pages: number;

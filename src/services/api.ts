@@ -10,6 +10,12 @@ import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
 import "whatwg-fetch";
 
+export type PaginatedRequestParams = {
+  page: number;
+  size: number;
+  sort?: string;
+};
+
 export type ApiLoginParams = {
   email: string;
   password: string;
@@ -19,6 +25,8 @@ export type ApiLoginParams = {
 export type ApiLoginResponse = User;
 
 export type ApiLogoutResponse = undefined;
+
+export type ApiGetFirmwaresParams = PaginatedRequestParams;
 
 export type ApiGetFirmwaresResponse = Paginated<Firmware>;
 
@@ -167,9 +175,11 @@ export class ApiClient {
     return response.data;
   }
 
-  async getFirmwares(): Promise<ApiGetFirmwaresResponse> {
+  async getFirmwares(
+    params: ApiGetFirmwaresParams
+  ): Promise<ApiGetFirmwaresResponse> {
     const url = `/cms/firmware`;
-    const config = this.getConfig();
+    const config = { ...this.getConfig(), params };
     const response = await this.axiosInstance.get<ApiGetFirmwaresResponse>(
       url,
       config

@@ -101,15 +101,13 @@ export const logout: ThunkActionCreator = () => async (
   dispatch(actions.logout.success());
 };
 
-export const getFirmwares: ThunkActionCreator<void> = () => async (
-  dispatch,
-  _,
-  { apiClient }
-) => {
+export const getFirmwares: ThunkActionCreator<
+  Api.ApiGetFirmwaresParams
+> = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.getFirmwares.request());
 
   try {
-    const response = await apiClient.getFirmwares();
+    const response = await apiClient.getFirmwares(input);
     validateBySchema(ApiGetFirmwaresResponseSchema, response);
     dispatch(actions.getFirmwares.success(response));
   } catch (err) {

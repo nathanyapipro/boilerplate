@@ -7,13 +7,15 @@ import {
   ApiPutFirmwareResponse,
   ApiPutFirmwareParams,
   ApiDeleteFirmwareParams,
-  ApiDeleteFirmwareResponse
+  ApiDeleteFirmwareResponse,
+  PaginatedRequestParams,
+  ApiGetFirmwaresParams
 } from "../../api";
 import { StoreState } from "../../../states";
 import firmwaresFixtures from "../../../fixtures/firmwares.json";
 import { Firmware } from "../../../types/models";
 import { ById } from "../../../types";
-import { getModelIdFromRequest } from "./index";
+import { getModelIdFromRequest, generatePagination } from "./index";
 
 const fimwaresById: ById<Firmware> = firmwaresFixtures;
 
@@ -21,7 +23,19 @@ export function getFirmwares(
   requestConfig: AxiosRequestConfig,
   _: StoreState
 ): ApiGetFirmwaresResponse {
-  return Object.keys(fimwaresById).map(id => fimwaresById[id]);
+  const {
+    page = 1,
+    size = 10,
+    sort = undefined
+  }: ApiGetFirmwaresParams = requestConfig.params;
+  const firmwares = Object.keys(fimwaresById).map(id => fimwaresById[id]);
+  const pagination = generatePagination(firmwares, page, size, sort);
+  const startIndex = (page - 1) * size;
+  const list = firmwares.slice(startIndex, startIndex + size);
+  return {
+    ...pagination,
+    list
+  };
 }
 
 export function postFirmware(

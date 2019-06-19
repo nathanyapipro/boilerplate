@@ -1,7 +1,7 @@
 import { matchPath, match as matchType } from "react-router";
 import { AxiosRequestConfig } from "axios";
 import { HasId } from "../../../types";
-import { Pagination } from "../../types/models";
+import { Pagination } from "../../../types/models";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "localhost:8080";
 export function getParamsfromRequest<T>(
@@ -41,14 +41,28 @@ export function generatePagination<T extends HasId>(
   size: number,
   sort?: string
 ): Pagination {
-  const previous =
-    cursorPos - pageSize < 0 ? undefined : btoa(items[cursorPos - pageSize].id);
-  const next =
-    cursorPos + pageSize >= items.length
-      ? undefined
-      : btoa(items[cursorPos + pageSize].id);
+  const total = items.length;
+  const navigateLastPage = Math.floor(total / size) + 1;
+  const navigateFirstPage = 1;
+  const hasNextPage = Boolean(page !== 1);
+  const hasPreviousPage = Boolean(page !== navigateLastPage);
+  const nextPage = hasNextPage ? page + 1 : undefined;
+  const prePage = hasPreviousPage ? page - 1 : undefined;
+  const pages = navigateLastPage;
+  const pageSize = size;
+  const pageNum = page;
+
   return {
-    previous,
-    next
+    hasNextPage,
+    hasPreviousPage,
+    navigateLastPage,
+    navigateFirstPage,
+    nextPage,
+    prePage,
+    pages,
+    pageNum,
+    pageSize,
+    size,
+    total
   };
 }

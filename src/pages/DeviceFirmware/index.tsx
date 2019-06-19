@@ -9,11 +9,12 @@ import AddIcon from "@material-ui/icons/Add";
 import { getFirmwares } from "../../states/api/actions";
 import TableDeviceFirmware from "../../components/TableDeviceFirmware";
 import UpdateDeviceFirmwareModal from "../../modals/DeviceFirmwareUpdate";
+import { ApiGetFirmwaresParams } from "../../services/api";
 
 interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
-  getFirmwares: (params: void) => void;
+  getFirmwares: (params: ApiGetFirmwaresParams) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -46,7 +47,7 @@ function DeviceFirmwareBase(props: Props) {
   const { getFirmwares } = props;
 
   React.useEffect(() => {
-    getFirmwares();
+    getFirmwares({ page: 1, size: 10 });
   }, [getFirmwares]);
 
   return (

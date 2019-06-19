@@ -94,11 +94,11 @@ export function cache(
       };
     }
     case getType(apiActions.getFirmwares.success): {
-      const firmwares = action.payload;
+      const { list } = action.payload;
 
       return {
         ...state,
-        firmwares: batchUpdate(state.firmwares, firmwares)
+        firmwares: batchUpdate(state.firmwares, list)
       };
     }
     case getType(apiActions.postFirmware.success):

@@ -34,7 +34,7 @@ export function fms(
       };
     }
     case getType(apiActions.getFirmwares.success):
-      const firmwares = action.payload;
+      const { list: firmwares } = action.payload;
 
       return {
         ...state,

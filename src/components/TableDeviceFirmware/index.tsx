@@ -16,6 +16,7 @@ import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import { Pagination } from "../../types/models";
+import { PaginationQuery } from "../../helpers/queryString";
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -36,12 +37,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     fontWeight: 600
   },
+  createButton: {
+    marginLeft: theme.spacing(2)
+  },
   icon: {
     marginRight: theme.spacing(0.5)
   }
 }));
 
-interface OwnProps {}
+interface OwnProps {
+  onPageChange: (params: PaginationQuery) => void;
+}
 
 interface ReduxStateProps {
   ids: Array<number>;
@@ -54,7 +60,19 @@ type Props = OwnProps & ReduxStateProps;
 function TableDeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { ids, apiCall, pagination } = props;
+  const { ids, apiCall, pagination, onPageChange } = props;
+
+  const { total = 0, pageNum = 0, pageSize = 0 } = pagination || {};
+
+  const handlePageChange = (
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    page: number
+  ) => {
+    onPageChange({
+      page: page + 1,
+      size: pageSize
+    });
+  };
 
   return (
     <React.Fragment>
@@ -66,17 +84,19 @@ function TableDeviceFirmwareBase(props: Props) {
         >
           All Device Firmwares
         </Typography>
-        {pagination && (
-          <TablePagination
-            component="div"
-            count={pagination.total}
-            onChangePage={console.log}
-            page={pagination.pageNum}
-            rowsPerPage={pagination.pageSize}
-            rowsPerPageOptions={[]}
-          />
-        )}
-        <Button color="primary" variant="contained">
+        <TablePagination
+          component="div"
+          count={total}
+          onChangePage={handlePageChange}
+          page={pageNum - 1}
+          rowsPerPage={pageSize}
+          rowsPerPageOptions={[]}
+        />
+        <Button
+          color="primary"
+          variant="contained"
+          className={classes.createButton}
+        >
           <AddIcon className={classes.icon} fontSize="small" />
           Create
         </Button>

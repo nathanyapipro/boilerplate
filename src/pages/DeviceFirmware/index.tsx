@@ -9,12 +9,17 @@ import TableDeviceFirmware from "../../components/TableDeviceFirmware";
 import { ApiGetFirmwaresParams } from "../../services/api";
 import { actions } from "../../states/crud/actions";
 import Page from "../../layouts/AppLayout/Page";
+import { getPaginationQuery, PaginationQuery } from "../../helpers/queryString";
+import { push } from "connected-react-router";
+import * as queryString from "query-string";
+import { RouteComponentProps } from "react-router";
 
 interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
   getFirmwares: (params: ApiGetFirmwaresParams) => void;
   reset: (params: void) => void;
+  push: typeof push;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -24,19 +29,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-type Props = ReduxDispatchProps & ReduxStateProps;
+type Props = ReduxDispatchProps & ReduxStateProps & RouteComponentProps;
 
 function DeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { reset, getFirmwares } = props;
+  const { reset, getFirmwares, location, push } = props;
+
+  const query = React.useMemo(() => getPaginationQuery(location.search), [
+    location.search
+  ]);
 
   React.useEffect(() => {
-    getFirmwares({ page: 1, size: 10 });
+    getFirmwares(query);
     return () => {
       reset();
     };
-  }, [getFirmwares, reset]);
+  }, [query, getFirmwares, reset]);
+
+  const handleQueryChange = (query: PaginationQuery) => {
+    // @ts-ignore
+    const serializedQuery = queryString.stringify(query);
+    push(`/fms/device?${serializedQuery}`);
+  };
+
+  const handlePageChange = (params: PaginationQuery) => {
+    handleQueryChange(params);
+  };
 
   return (
     <Page
@@ -51,7 +70,7 @@ function DeviceFirmwareBase(props: Props) {
           </Typography>
         </React.Fragment>
       }
-      content={<TableDeviceFirmware />}
+      content={<TableDeviceFirmware onPageChange={handlePageChange} />}
     />
   );
 }
@@ -64,7 +83,8 @@ const DeviceFirmware = connect(
   mapStateToProps,
   {
     reset: actions.reset,
-    getFirmwares
+    getFirmwares,
+    push
   }
 )(DeviceFirmwareBase);
 

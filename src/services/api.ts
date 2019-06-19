@@ -8,7 +8,6 @@ import { Paginated, User, Firmware } from "../types/models";
 import { HttpStatusCode } from "../helpers/http";
 import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
-import "whatwg-fetch";
 
 export type PaginatedRequestParams = {
   page: number;

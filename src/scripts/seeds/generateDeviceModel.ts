@@ -19,7 +19,7 @@ export default function generateFirmware(): ById<DeviceModel> {
       id: 2,
       modelNumber: "01",
       hardwareRevision: "00",
-      colorNumber: "0000",
+      colorNumber: "0001",
       imageUrl:
         "https://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com/device/model/animation%20for%20app_WH.2048%20%281%29.png",
       lastModifiedAdminId: 1,

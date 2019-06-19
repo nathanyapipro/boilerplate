@@ -29,11 +29,13 @@ export function crud(
         editId
       };
     }
+    case getType(apiActions.getDeviceModels.success):
     case getType(apiActions.getFirmwares.success): {
       const { list, ...pagination } = action.payload;
 
       return {
         ...state,
+        //@ts-ignore
         ids: list.map((item: HasId) => item.id),
         pagination
       };

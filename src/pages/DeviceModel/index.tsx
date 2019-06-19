@@ -4,21 +4,21 @@ import Typography from "@material-ui/core/Typography";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import { Theme } from "@material-ui/core";
-import { getFirmwares } from "../../states/api/actions";
-import TableDeviceFirmware from "../../components/TableDeviceFirmware";
-import { ApiGetFirmwaresParams } from "../../services/api";
+import { getDeviceModels } from "../../states/api/actions";
+import TableDeviceModel from "../../components/TableDeviceModel";
+import { ApiGetDeviceModelsParams } from "../../services/api";
 import { actions } from "../../states/crud/actions";
 import Page from "../../layouts/AppLayout/Page";
 import { getPaginationQuery, PaginationQuery } from "../../helpers/queryString";
 import { push } from "connected-react-router";
 import * as queryString from "query-string";
 import { RouteComponentProps } from "react-router";
-import DeviceFirmwareUpdateModal from "../../modals/DeviceFirmwareUpdate";
+// import DeviceModelUpdateModal from "../../modals/DeviceModelUpdate";
 
 interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
-  getFirmwares: (params: ApiGetFirmwaresParams) => void;
+  getDeviceModels: (params: ApiGetDeviceModelsParams) => void;
   reset: (params: void) => void;
   push: typeof push;
 }
@@ -32,26 +32,26 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = ReduxDispatchProps & ReduxStateProps & RouteComponentProps;
 
-function DeviceFirmwareBase(props: Props) {
+function DeviceModelBase(props: Props) {
   const classes = useStyles();
 
-  const { reset, getFirmwares, location, push } = props;
+  const { reset, getDeviceModels, location, push } = props;
 
   const query = React.useMemo(() => getPaginationQuery(location.search), [
     location.search
   ]);
 
   React.useEffect(() => {
-    getFirmwares(query);
+    getDeviceModels(query);
     return () => {
       reset();
     };
-  }, [query, getFirmwares, reset]);
+  }, [query, getDeviceModels, reset]);
 
   const handleQueryChange = (query: PaginationQuery) => {
     // @ts-ignore
     const serializedQuery = queryString.stringify(query);
-    push(`/fms/device?${serializedQuery}`);
+    push(`/cms/device?${serializedQuery}`);
   };
 
   const handlePageChange = (params: PaginationQuery) => {
@@ -68,13 +68,13 @@ function DeviceFirmwareBase(props: Props) {
               color="textPrimary"
               className={classes.title}
             >
-              Device Firmwares
+              Device Models
             </Typography>
           </React.Fragment>
         }
-        content={<TableDeviceFirmware onPageChange={handlePageChange} />}
+        content={<TableDeviceModel onPageChange={handlePageChange} />}
       />
-      <DeviceFirmwareUpdateModal />
+      {/* <DeviceModelUpdateModal /> */}
     </React.Fragment>
   );
 }
@@ -83,13 +83,13 @@ const mapStateToProps = (_: StoreState): ReduxStateProps => {
   return {};
 };
 
-const DeviceFirmware = connect(
+const DeviceModel = connect(
   mapStateToProps,
   {
     reset: actions.reset,
-    getFirmwares,
+    getDeviceModels,
     push
   }
-)(DeviceFirmwareBase);
+)(DeviceModelBase);
 
-export default DeviceFirmware;
+export default DeviceModel;

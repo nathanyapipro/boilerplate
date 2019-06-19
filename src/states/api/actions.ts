@@ -26,7 +26,6 @@ import ApiDeleteFirmwareResponseSchema from "../../schemas/api/ApiDeleteFirmware
 import { AxiosError } from "axios";
 import { HasId } from "../../types";
 import { Dispatch } from "redux";
-import { Omit } from "../../types";
 
 export const actions = {
   login: createAsyncAction(

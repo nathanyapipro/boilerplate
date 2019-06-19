@@ -6,15 +6,15 @@ export interface PaginationQuery {
   sort?: string;
 }
 
-function parseQueryString(
-  value: string | number | (string | number)[] | null | undefined,
-  defaultValue: string
-): string {
-  if (typeof value === "string") {
-    return value;
-  }
-  return defaultValue;
-}
+// function parseQueryString(
+//   value: string | number | (string | number)[] | null | undefined,
+//   defaultValue: string
+// ): string {
+//   if (typeof value === "string") {
+//     return value;
+//   }
+//   return defaultValue;
+// }
 
 function parseQueryInt(
   value: string | number | (string | number)[] | null | undefined,

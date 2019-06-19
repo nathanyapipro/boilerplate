@@ -17,22 +17,32 @@ const Head = (_: Props) => {
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            Version
+            Color Number
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            Model
-          </Typography>
-        </TableCell>
-        <TableCell colSpan={2}>
-          <Typography color="textSecondary" variant="caption">
-            Description
+            Model Number
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            Published At
+            Hardware Revision
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Typography color="textSecondary" variant="caption">
+            Image
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Typography color="textSecondary" variant="caption">
+            Last Modified By
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Typography color="textSecondary" variant="caption">
+            Created At
           </Typography>
         </TableCell>
         <TableCell>

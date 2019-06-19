@@ -1,6 +1,6 @@
 import faker from "faker";
 import { AxiosRequestConfig } from "axios";
-import { ApiPostFileResponse, ApiPostFileParams } from "../../api";
+import { ApiPostFileResponse } from "../../api";
 import { StoreState } from "../../../states";
 
 export function postFile(

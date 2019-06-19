@@ -58,7 +58,7 @@ function TableDeviceFirmwareBase(props: Props) {
       <div className={classes.header}>
         <Typography
           variant="body1"
-          color="textPrimary"
+          color="textSecondary"
           className={classes.title}
         >
           All Device Firmwares

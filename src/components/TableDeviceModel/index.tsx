@@ -82,7 +82,7 @@ function TableDeviceModelBase(props: Props) {
           color="textSecondary"
           className={classes.title}
         >
-          All Device Firmwares
+          All Device Models
         </Typography>
         <TablePagination
           component="div"

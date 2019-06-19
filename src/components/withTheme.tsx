@@ -3,7 +3,7 @@ import { createMuiTheme, CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import grey from "@material-ui/core/colors/grey";
 
-// const defaultTheme = createMuiTheme({});
+const defaultTheme = createMuiTheme({});
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +29,14 @@ const theme = createMuiTheme({
       root: {
         position: "relative",
         tableLayout: "fixed"
+      }
+    },
+    MuiTableCell: {
+      root: {
+        padding: defaultTheme.spacing(1)
+      },
+      head: {
+        fontWeight: defaultTheme.typography.fontWeightBold
       }
     }
   }

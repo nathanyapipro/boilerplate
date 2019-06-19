@@ -1,8 +1,7 @@
 import * as React from "react";
-import TableHead from "@material-ui/core/TableBody";
+import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Typography from "@material-ui/core/Typography";
 
 type Props = {};
 
@@ -10,41 +9,13 @@ const Head = (_: Props) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Id
-          </Typography>
-        </TableCell>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Version
-          </Typography>
-        </TableCell>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Model
-          </Typography>
-        </TableCell>
-        <TableCell colSpan={2}>
-          <Typography color="textSecondary" variant="caption">
-            Description
-          </Typography>
-        </TableCell>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Published At
-          </Typography>
-        </TableCell>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Modified At
-          </Typography>
-        </TableCell>
-        <TableCell>
-          <Typography color="textSecondary" variant="caption">
-            Actions
-          </Typography>
-        </TableCell>
+        <TableCell>Id</TableCell>
+        <TableCell>Version</TableCell>
+        <TableCell>Model</TableCell>
+        <TableCell colSpan={2}>Description</TableCell>
+        <TableCell>Published At</TableCell>
+        <TableCell>Modified At</TableCell>
+        <TableCell>Actions</TableCell>
       </TableRow>
     </TableHead>
   );

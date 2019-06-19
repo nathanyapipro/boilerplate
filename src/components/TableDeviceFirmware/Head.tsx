@@ -12,37 +12,37 @@ const Head = (_: Props) => {
       <TableRow>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            ID
+            Id
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            VERSION
+            Version
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            MODEL
+            Model
           </Typography>
         </TableCell>
         <TableCell colSpan={2}>
           <Typography color="textSecondary" variant="caption">
-            DESC
+            Description
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            PUBLISHED AT
+            Published At
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            MODEFIED AT
+            Modefied At
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="caption">
-            ACTIONS
+            Actions
           </Typography>
         </TableCell>
       </TableRow>

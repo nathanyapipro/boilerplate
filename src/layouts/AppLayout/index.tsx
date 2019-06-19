@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: "8px 0px 12px 0px",
     backgroundColor: theme.palette.grey[50],
     flex: 1,
-    padding: theme.spacing(4),
-    paddingTop: 0
+    // padding: theme.spacing(4),
+    overflowY: "auto"
   }
 }));
 

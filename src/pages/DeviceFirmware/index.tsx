@@ -11,6 +11,8 @@ import TableDeviceFirmware from "../../components/TableDeviceFirmware";
 import UpdateDeviceFirmwareModal from "../../modals/DeviceFirmwareUpdate";
 import { ApiGetFirmwaresParams } from "../../services/api";
 import { actions } from "../../states/crud/actions";
+import Page from "../../layouts/AppLayout/Page";
+import Header from "../../components/SubSidebar/Header";
 
 interface ReduxStateProps {}
 
@@ -20,24 +22,12 @@ interface ReduxDispatchProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  header: {
-    display: "flex",
-    height: theme.spacing(12),
-    alignItems: "center"
-  },
   title: {
     fontWeight: 600,
     flex: 1
   },
   icon: {
     marginRight: theme.spacing(0.5)
-  },
-  content: {
-    display: "flex"
   }
 }));
 
@@ -56,21 +46,24 @@ function DeviceFirmwareBase(props: Props) {
   }, [getFirmwares, reset]);
 
   return (
-    <div className={classes.container}>
-      <div className={classes.header}>
-        <Typography variant="h6" color="textPrimary" className={classes.title}>
-          Device Firmware
-        </Typography>
-        <Button color="primary" size="small" variant="contained">
-          <AddIcon className={classes.icon} fontSize="small" />
-          Create
-        </Button>
-      </div>
-      <div className={classes.content}>
-        <TableDeviceFirmware />
-      </div>
-      <UpdateDeviceFirmwareModal />
-    </div>
+    <Page
+      header={
+        <React.Fragment>
+          <Typography
+            variant="h6"
+            color="textPrimary"
+            className={classes.title}
+          >
+            Device Firmware
+          </Typography>
+          <Button color="primary" size="small" variant="contained">
+            <AddIcon className={classes.icon} fontSize="small" />
+            Create
+          </Button>
+        </React.Fragment>
+      }
+      content={<TableDeviceFirmware />}
+    />
   );
 }
 

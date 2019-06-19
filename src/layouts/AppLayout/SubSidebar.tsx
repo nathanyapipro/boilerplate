@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    width: theme.spacing(26)
+    width: theme.spacing(30)
   }
 }));
 

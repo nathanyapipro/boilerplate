@@ -1,6 +1,6 @@
 import { ActionType, getType } from "typesafe-actions";
 import { actions as apiActions } from "../api/actions";
-import { User, Firmware } from "../../types/models";
+import { User, DeviceModel, Firmware } from "../../types/models";
 import { getLocalStorageAuthCredentials } from "../../helpers/auth";
 import { ById } from "../../types";
 
@@ -11,6 +11,7 @@ export interface NormalizedModel<T> {
 
 export interface CacheState {
   users: NormalizedModel<User>;
+  deviceModels: NormalizedModel<DeviceModel>;
   firmwares: NormalizedModel<Firmware>;
 }
 
@@ -77,6 +78,7 @@ const INITIAL_STATE = {
         allIds: [credentials.id]
       }
     : INITIAL_ENTITY_STATE,
+  deviceModels: INITIAL_ENTITY_STATE,
   firmwares: INITIAL_ENTITY_STATE
 };
 

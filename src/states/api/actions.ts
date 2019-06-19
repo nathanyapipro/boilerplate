@@ -14,6 +14,10 @@ import {
 } from "../../helpers/auth";
 import { validateBySchema } from "../../helpers/validators";
 import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
+import ApiGetDeviceModelsResponseSchema from "../../schemas/api/ApiGetDeviceModelsResponse";
+import ApiPostDeviceModelResponseSchema from "../../schemas/api/ApiPostDeviceModelResponse";
+import ApiPutDeviceModelResponseSchema from "../../schemas/api/ApiPutDeviceModelResponse";
+import ApiDeleteDeviceModelResponseSchema from "../../schemas/api/ApiDeleteDeviceModelResponse";
 import ApiGetFirmwaresResponseSchema from "../../schemas/api/ApiGetFirmwaresResponse";
 import ApiPostFirmwareResponseSchema from "../../schemas/api/ApiPostFirmwareResponse";
 import ApiPutFirmwareResponseSchema from "../../schemas/api/ApiPutFirmwareResponse";
@@ -32,6 +36,31 @@ export const actions = {
     "api/LOGOUT_SUCCESS",
     "api/LOGOUT_FAILURE"
   )<void, Api.ApiLogoutResponse, AxiosError>(),
+  postFile: createAsyncAction(
+    "api/POST_FILE_REQUEST",
+    "api/POST_FILE_SUCCESS",
+    "api/POST_FILE_FAILURE"
+  )<void, Api.ApiPostFileResponse, AxiosError>(),
+  getDeviceModels: createAsyncAction(
+    "api/GET_DEVICE_MODELS_REQUEST",
+    "api/GET_DEVICE_MODELS_SUCCESS",
+    "api/GET_DEVICE_MODELS_FAILURE"
+  )<void, Api.ApiGetDeviceModelsResponse, AxiosError>(),
+  postDeviceModel: createAsyncAction(
+    "api/POST_DEVICE_MODEL_REQUEST",
+    "api/POST_DEVICE_MODEL_SUCCESS",
+    "api/POST_DEVICE_MODEL_FAILURE"
+  )<void, Api.ApiPostDeviceModelResponse, AxiosError>(),
+  putDeviceModel: createAsyncAction(
+    "api/PUT_DEVICE_MODEL_REQUEST",
+    "api/PUT_DEVICE_MODEL_SUCCESS",
+    "api/PUT_DEVICE_MODEL_FAILURE"
+  )<void, Api.ApiPutDeviceModelResponse, AxiosError>(),
+  deleteDeviceModel: createAsyncAction(
+    "api/DELETE_DEVICE_MODEL_REQUEST",
+    "api/DELETE_DEVICE_MODEL_SUCCESS",
+    "api/DELETE_DEVICE_MODEL_FAILURE"
+  )<void, Api.ApiDeleteDeviceModelResponse, AxiosError>(),
   getFirmwares: createAsyncAction(
     "api/GET_FIRMWARES_REQUEST",
     "api/GET_FIRMWARES_SUCCESS",

@@ -1,6 +1,7 @@
+import faker from "faker";
 import { writeSeedsToFile } from "./utils";
 import generateUsers from "./generateUser";
-import faker from "faker";
+import generateDeviceModel from "./generateDeviceModel";
 import generateFirmware from "./generateFirmware";
 
 const CONFIG = {
@@ -12,16 +13,12 @@ const users = generateUsers();
 const serializedUsers = JSON.stringify(users);
 writeSeedsToFile(serializedUsers, CONFIG.dstPath, "users.json");
 
-// Generate firmwares
+// Generate device models
 const firmwares = generateFirmware();
 const serializedFirmwares = JSON.stringify(firmwares);
 writeSeedsToFile(serializedFirmwares, CONFIG.dstPath, "firmwares.json");
 
-// // Generate policies
-// const policies = [];
-// faker.seed(1234);
-// for (let i = 0; i < 30; i++) {
-//   policies.push(generatePolicy());
-// }
-// const serializedPolicies = JSON.stringify(policies);
-// writeSeedsToFile(serializedPolicies, CONFIG.dstPath, "policies.json");
+// Generate firmwares
+const deviceModels = generateDeviceModel();
+const serializedDeviceModels = JSON.stringify(deviceModels);
+writeSeedsToFile(serializedDeviceModels, CONFIG.dstPath, "deviceModels.json");

@@ -1,15 +1,1 @@
-{
-  "1": {
-    "id": 1,
-    "appToken": "34145ytrhfgwdnjghyt2y3t43564ytgfgwrty51345",
-    "disabled": false,
-    "lastModifiedAdminId": 1,
-    "profiles": [],
-    "roles": [],
-    "name": "Admin",
-    "email": "admin@airgraft.com",
-    "isAdmin": true,
-    "createdDate": "2019-06-17T18:32:19.108Z",
-    "modifiedDate": "2019-06-17T18:32:19.108Z"
-  }
-}
+{"1":{"id":1,"appToken":"34145ytrhfgwdnjghyt2y3t43564ytgfgwrty51345","disabled":false,"lastModifiedAdminId":1,"profiles":[],"roles":[],"name":"Admin","email":"admin@airgraft.com","isAdmin":true,"createdDate":"2019-06-19T21:13:10.639Z","modifiedDate":"2019-06-19T21:13:10.639Z"}}

@@ -2,6 +2,8 @@ import { AxiosRequestConfig, AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { Store } from "redux";
 import * as authController from "./controllers/auth";
+import * as fileController from "./controllers/file";
+import * as deviceModelController from "./controllers/deviceModel";
 import * as firmwareController from "./controllers/firmware";
 import { StoreState, Actions } from "../../states";
 
@@ -31,6 +33,73 @@ export function mockAxios(
     logAxiosConfig(config);
     try {
       const result = authController.logout();
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onPost(/\/file$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = fileController.postFile(config, store.getState());
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onGet(/\/cms\/device\/model$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = deviceModelController.getDeviceModels(
+        config,
+        store.getState()
+      );
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onPost(/\/cms\/device\/model$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = deviceModelController.postDeviceModel(
+        config,
+        store.getState()
+      );
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onPut(/\/cms\/device\/model\/[0-9]+$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = deviceModelController.putDeviceModel(
+        config,
+        store.getState()
+      );
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onDelete(/\/cms\/device\/model$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = deviceModelController.deleteDeviceModel(
+        config,
+        store.getState()
+      );
       return [200, result];
     } catch (e) {
       console.error("axios-mock-adapter: ", e);

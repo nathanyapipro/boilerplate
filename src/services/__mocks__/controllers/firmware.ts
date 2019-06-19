@@ -1,14 +1,14 @@
 import faker from "faker";
 import { AxiosRequestConfig } from "axios";
 import {
+  ApiGetFirmwaresParams,
   ApiGetFirmwaresResponse,
   ApiPostFirmwareResponse,
   ApiPostFirmwareParams,
   ApiPutFirmwareResponse,
   ApiPutFirmwareParams,
   ApiDeleteFirmwareParams,
-  ApiDeleteFirmwareResponse,
-  ApiGetFirmwaresParams
+  ApiDeleteFirmwareResponse
 } from "../../api";
 import { StoreState } from "../../../states";
 import firmwaresFixtures from "../../../fixtures/firmwares.json";
@@ -16,7 +16,7 @@ import { Firmware } from "../../../types/models";
 import { ById } from "../../../types";
 import { getModelIdFromRequest, generatePagination } from "./index";
 
-const fimwaresById: ById<Firmware> = firmwaresFixtures;
+const firmwaresById: ById<Firmware> = firmwaresFixtures;
 
 export function getFirmwares(
   requestConfig: AxiosRequestConfig,
@@ -27,7 +27,7 @@ export function getFirmwares(
     size = 10,
     sort = undefined
   }: ApiGetFirmwaresParams = requestConfig.params;
-  const firmwares = Object.keys(fimwaresById).map(id => fimwaresById[id]);
+  const firmwares = Object.keys(firmwaresById).map(id => firmwaresById[id]);
   const pagination = generatePagination(firmwares, page, size, sort);
   const startIndex = (page - 1) * size;
   const list = firmwares.slice(startIndex, startIndex + size);

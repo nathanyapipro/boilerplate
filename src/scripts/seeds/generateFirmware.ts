@@ -19,7 +19,7 @@ https://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com
     },
     "2": {
       id: 2,
-      description: faker.lorem.sentences(),
+      description: faker.lorem.words(),
       model: "Airgraft001",
       version: "AG0.01.3",
       url: `

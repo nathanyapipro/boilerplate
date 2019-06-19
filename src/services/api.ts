@@ -4,7 +4,7 @@ import axios, {
   // AxiosRequestConfig
 } from "axios";
 import * as retryAxios from "retry-axios";
-import { Paginated, User, Firmware } from "../types/models";
+import { Paginated, User, DeviceModel, Firmware } from "../types/models";
 import { HttpStatusCode } from "../helpers/http";
 import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
@@ -20,36 +20,59 @@ export type ApiLoginParams = {
   password: string;
   uuid: string;
 };
-
 export type ApiLoginResponse = User;
-
 export type ApiLogoutResponse = undefined;
 
-export type ApiGetFirmwaresParams = PaginatedRequestParams;
+export type ApiPostFileParams = {
+  file: File;
+};
+export type ApiPostFileResponse = {
+  url: string;
+};
 
+export type ApiGetDeviceModelsParams = PaginatedRequestParams;
+export type ApiGetDeviceModelsResponse = Paginated<DeviceModel>;
+
+export type ApiPostDeviceModelParams = Omit<
+  DeviceModel,
+  "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId"
+>;
+export type ApiPostDeviceModelResponse = DeviceModel;
+
+export type ApiPutDeviceModelParams = Partial<
+  Omit<
+    DeviceModel,
+    "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId"
+  >
+>;
+export type ApiPutDeviceModelResponse = DeviceModel;
+
+export type ApiDeleteDeviceModelParams = { ids: number[] };
+export type ApiDeleteDeviceModelResponse = { ids: number[] };
+
+export type ApiGetFirmwaresParams = PaginatedRequestParams;
 export type ApiGetFirmwaresResponse = Paginated<Firmware>;
 
 export type ApiPostFirmwareParams = Omit<
   Firmware,
   "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
 >;
-
 export type ApiPostFirmwareResponse = Firmware;
 
-export type ApiPutFirmwareParams = Omit<
-  Firmware,
-  | "id"
-  | "createdDate"
-  | "modifiedDate"
-  | "lastModifiedAdminId"
-  | "deleted"
-  | "url"
+export type ApiPutFirmwareParams = Partial<
+  Omit<
+    Firmware,
+    | "id"
+    | "createdDate"
+    | "modifiedDate"
+    | "lastModifiedAdminId"
+    | "deleted"
+    | "url"
+  >
 >;
-
 export type ApiPutFirmwareResponse = Firmware;
 
 export type ApiDeleteFirmwareParams = { ids: number[] };
-
 export type ApiDeleteFirmwareResponse = { ids: number[] };
 
 interface AxiosResponseError extends AxiosError {
@@ -174,10 +197,66 @@ export class ApiClient {
     return response.data;
   }
 
+  async postFile(params: ApiPostFileParams): Promise<ApiPostFileResponse> {
+    const url = `/file`;
+    const config = this.getConfig();
+    let formData = new FormData();
+    formData.append("file", params.file);
+    config.headers = {
+      ...config.headers,
+      "Content-Type": "multipart/form-data"
+    };
+    const response = await this.axiosInstance.post<ApiPostFileResponse>(
+      url,
+      formData,
+      config
+    );
+    return response.data;
+  }
+
+  async getDeviceModels(
+    params: ApiGetDeviceModelsParams
+  ): Promise<ApiGetDeviceModelsResponse> {
+    const url = `/cms/device/model`;
+    const config = { ...this.getConfig(), params };
+    const response = await this.axiosInstance.get<ApiGetDeviceModelsResponse>(
+      url,
+      config
+    );
+    return response.data;
+  }
+
+  async postDeviceModel(
+    params: ApiPostDeviceModelParams
+  ): Promise<ApiPostDeviceModelResponse> {
+    const url = `/cms/device/model`;
+    const config = this.getConfig();
+    const response = await this.axiosInstance.post<ApiPostDeviceModelResponse>(
+      url,
+      JSON.stringify(params),
+      config
+    );
+    return response.data;
+  }
+
+  async putDeviceModel(
+    id: number,
+    params: ApiPutDeviceModelParams
+  ): Promise<ApiPutDeviceModelResponse> {
+    const url = `/cms/device/model/${id}`;
+    const config = this.getConfig();
+    const response = await this.axiosInstance.put<ApiPutDeviceModelResponse>(
+      url,
+      JSON.stringify(params),
+      config
+    );
+    return response.data;
+  }
+
   async getFirmwares(
     params: ApiGetFirmwaresParams
   ): Promise<ApiGetFirmwaresResponse> {
-    const url = `/cms/firmware`;
+    const url = `/cms/device/model`;
     const config = { ...this.getConfig(), params };
     const response = await this.axiosInstance.get<ApiGetFirmwaresResponse>(
       url,

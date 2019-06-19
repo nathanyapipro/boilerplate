@@ -4,6 +4,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import TablePagination from "@material-ui/core/TablePagination";
 import { Theme } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { StoreState } from "../../states";
@@ -14,6 +15,7 @@ import Loading from "../../components/Loading";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import { Pagination } from "../../types/models";
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -27,8 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   header: {
     display: "flex",
     flexDirection: "row",
-    flex: 1,
-    marginBottom: theme.spacing(2)
+    alignItems: "center",
+    flex: 1
   },
   title: {
     flex: 1,
@@ -44,6 +46,7 @@ interface OwnProps {}
 interface ReduxStateProps {
   ids: Array<number>;
   apiCall: ApiCall;
+  pagination?: Pagination;
 }
 
 type Props = OwnProps & ReduxStateProps;
@@ -51,7 +54,7 @@ type Props = OwnProps & ReduxStateProps;
 function TableDeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { ids, apiCall } = props;
+  const { ids, apiCall, pagination } = props;
 
   return (
     <React.Fragment>
@@ -63,7 +66,17 @@ function TableDeviceFirmwareBase(props: Props) {
         >
           All Device Firmwares
         </Typography>
-        <Button color="primary" size="small" variant="contained">
+        {pagination && (
+          <TablePagination
+            component="div"
+            count={pagination.total}
+            onChangePage={console.log}
+            page={pagination.pageNum}
+            rowsPerPage={pagination.pageSize}
+            rowsPerPageOptions={[]}
+          />
+        )}
+        <Button color="primary" variant="contained">
           <AddIcon className={classes.icon} fontSize="small" />
           Create
         </Button>
@@ -99,12 +112,13 @@ function TableDeviceFirmwareBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const { ids } = state.crud;
+  const { ids, pagination } = state.crud;
   const apiCall = state.api.getFirmwares;
 
   return {
     ids,
-    apiCall
+    apiCall,
+    pagination
   };
 };
 

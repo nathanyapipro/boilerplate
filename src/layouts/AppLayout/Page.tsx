@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     margin: `${theme.spacing(4)}px ${theme.spacing(8)}px`,
-    borderBottom: `1px solid ${theme.palette.primary.main}`
+    borderBottom: `2px solid ${theme.palette.primary.main}`
   },
   content: {
     display: "flex",

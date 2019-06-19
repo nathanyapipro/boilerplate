@@ -105,7 +105,7 @@ function UpdateDialogBase(props: Props) {
     ) {
       handleClose();
     }
-  }, [previousRequestStatus, requestStatus]);
+  }, [previousRequestStatus, requestStatus, handleClose]);
 
   const handleSubmit = () => {
     if (Object.keys(errors).length === 0) {
@@ -117,7 +117,7 @@ function UpdateDialogBase(props: Props) {
     }
   };
 
-  const validate = () => {
+  React.useEffect(() => {
     const errors: any = {};
     if (!values.version) {
       errors.version = "Required";
@@ -126,10 +126,6 @@ function UpdateDialogBase(props: Props) {
       errors.model = "Required";
     }
     setErrors(errors);
-  };
-
-  React.useEffect(() => {
-    validate();
   }, [values]);
 
   return (

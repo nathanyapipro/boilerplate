@@ -8,7 +8,6 @@ import {
   ApiPutFirmwareParams,
   ApiDeleteFirmwareParams,
   ApiDeleteFirmwareResponse,
-  PaginatedRequestParams,
   ApiGetFirmwaresParams
 } from "../../api";
 import { StoreState } from "../../../states";
@@ -73,7 +72,7 @@ export function deleteFirmware(
   requestConfig: AxiosRequestConfig,
   _: StoreState
 ): ApiDeleteFirmwareResponse {
-  const params = requestConfig.params as ApiDeleteFirmwareResponse;
+  const params: ApiDeleteFirmwareParams = requestConfig.params;
 
   return params;
 }

@@ -2,13 +2,13 @@ import * as React from "react";
 import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 import { StoreState } from "../../states";
-import { makeStyles } from "@material-ui/styles";
-import { Theme } from "@material-ui/core";
+// import { makeStyles } from "@material-ui/styles";
+// import { Theme } from "@material-ui/core";
 import { actions } from "../../states/fms/actions";
 import { Firmware } from "../../types/models";
 import Form from "./Form";
 
-const useStyles = makeStyles((theme: Theme) => ({}));
+// const useStyles = makeStyles((theme: Theme) => ({}));
 
 interface OwnProps {}
 
@@ -23,7 +23,7 @@ interface ReduxDispatchProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 function UpdateDialogBase(props: Props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const { data, setPutId } = props;
 
   const handleClose = () => {

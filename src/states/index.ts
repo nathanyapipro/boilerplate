@@ -12,13 +12,13 @@ import { cache, CacheState } from "./cache/reducer";
 import { global, GlobalState } from "./global/reducer";
 import { auth, AuthState } from "./auth/reducer";
 import { api, ApiState } from "./api/reducer";
-import { fms, FMSState } from "./fms/reducer";
+import { crud, CrudState } from "./crud/reducer";
 import { snackbar, SnackbarState } from "./snackbar/reducer";
 import { actions as authActions } from "./auth/actions";
 import { actions as apiActions } from "./api/actions";
 import { actions as broadcastChannelActions } from "./broadcastChannel/actions";
 import { actions as snackbarActions } from "./snackbar/actions";
-import { actions as fmsActions } from "./fms/actions";
+import { actions as crudActions } from "./crud/actions";
 import * as Api from "../services/api";
 import { History, createBrowserHistory } from "history";
 import { createBroadcastChannel } from "../services/broadcastChannel";
@@ -53,7 +53,7 @@ export type Actions = ActionType<
   | typeof apiActions
   | typeof broadcastChannelActions
   | typeof snackbarActions
-  | typeof fmsActions
+  | typeof crudActions
   | CallHistoryMethodAction
 >;
 
@@ -74,7 +74,7 @@ export interface StoreState {
   cache: CacheState;
   api: ApiState;
   snackbar: SnackbarState;
-  fms: FMSState;
+  crud: CrudState;
 }
 
 interface InitStore {
@@ -117,7 +117,7 @@ export async function initStore(): Promise<InitStore> {
       cache,
       api,
       snackbar,
-      fms
+      crud
     }),
     {
       global: {

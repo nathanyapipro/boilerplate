@@ -1,12 +1,13 @@
 import { ActionType, getType } from "typesafe-actions";
 import { actions } from "./actions";
-import { Firmware } from "../../types/models";
+import { Pagination } from "../../types/models";
 import { actions as apiActions } from "../api/actions";
 import { HasId } from "../../types";
 
 export interface CrudState {
   editId?: number;
   ids: number[];
+  pagination?: Pagination;
 }
 
 const INITIAL_STATE = {
@@ -28,22 +29,33 @@ export function crud(
         editId
       };
     }
-    case getType(apiActions.getFirmwares.success):
-      const { list } = action.payload;
+    case getType(apiActions.getFirmwares.success): {
+      const { list, ...pagination } = action.payload;
 
       return {
         ...state,
-        ids: list.map((item: HasId) => item.id)
+        ids: list.map((item: HasId) => item.id),
+        pagination
       };
-    case getType(apiActions.deleteFirmware.success):
+    }
+    case getType(apiActions.deleteFirmware.success): {
       const { ids } = action.payload;
 
       const remainingIds = state.ids.filter(id => ids.indexOf(id) === -1);
 
+      const pagination = state.pagination
+        ? {
+            ...state.pagination,
+            total: state.pagination.total - ids.length
+          }
+        : undefined;
+
       return {
         ...state,
-        ids: remainingIds
+        ids: remainingIds,
+        pagination
       };
+    }
     default:
       return state;
   }

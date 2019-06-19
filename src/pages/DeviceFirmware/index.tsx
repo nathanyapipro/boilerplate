@@ -10,11 +10,13 @@ import { getFirmwares } from "../../states/api/actions";
 import TableDeviceFirmware from "../../components/TableDeviceFirmware";
 import UpdateDeviceFirmwareModal from "../../modals/DeviceFirmwareUpdate";
 import { ApiGetFirmwaresParams } from "../../services/api";
+import { actions } from "../../states/crud/actions";
 
 interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
   getFirmwares: (params: ApiGetFirmwaresParams) => void;
+  reset: (params: void) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,11 +46,14 @@ type Props = ReduxDispatchProps & ReduxStateProps;
 function DeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { getFirmwares } = props;
+  const { reset, getFirmwares } = props;
 
   React.useEffect(() => {
     getFirmwares({ page: 1, size: 10 });
-  }, [getFirmwares]);
+    return () => {
+      reset();
+    };
+  }, [getFirmwares, reset]);
 
   return (
     <div className={classes.container}>
@@ -76,6 +81,7 @@ const mapStateToProps = (_: StoreState): ReduxStateProps => {
 const DeviceFirmware = connect(
   mapStateToProps,
   {
+    reset: actions.reset,
     getFirmwares
   }
 )(DeviceFirmwareBase);

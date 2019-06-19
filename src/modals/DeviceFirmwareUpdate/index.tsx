@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { StoreState } from "../../states";
 // import { makeStyles } from "@material-ui/styles";
 // import { Theme } from "@material-ui/core";
-import { actions } from "../../states/fms/actions";
+import { actions } from "../../states/crud/actions";
 import { Firmware } from "../../types/models";
 import Form from "./Form";
 
@@ -17,17 +17,17 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-  setPutId: (params?: number) => void;
+  setEditId: (params?: number) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 function UpdateDialogBase(props: Props) {
   // const classes = useStyles();
-  const { data, setPutId } = props;
+  const { data, setEditId } = props;
 
   const handleClose = () => {
-    setPutId(undefined);
+    setEditId(undefined);
   };
 
   return (
@@ -45,11 +45,11 @@ function UpdateDialogBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const { putId } = state.fms.device;
+  const { editId } = state.crud;
   const { byId } = state.cache.firmwares;
   let data = undefined;
-  if (putId) {
-    data = byId[putId];
+  if (editId) {
+    data = byId[editId];
   }
   return {
     data
@@ -59,7 +59,7 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
 const UpdateDialog = connect(
   mapStateToProps,
   {
-    setPutId: actions.setPutId
+    setEditId: actions.setEditId
   }
 )(UpdateDialogBase);
 

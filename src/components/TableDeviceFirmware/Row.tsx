@@ -10,7 +10,7 @@ import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { actions } from "../../states/fms/actions";
+import { actions } from "../../states/crud/actions";
 import { deleteFirmware } from "../../states/api/actions";
 import { ApiDeleteFirmwareParams } from "../../services/api";
 
@@ -36,7 +36,7 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-  setPutId: (params?: number) => void;
+  setEditId: (params?: number) => void;
   deleteFirmware: (params: ApiDeleteFirmwareParams) => void;
 }
 
@@ -47,12 +47,12 @@ interface OwnProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const RowBase = function RowBase(props: Props) {
-  const { id, firmware, setPutId, deleteFirmware } = props;
+  const { id, firmware, setEditId, deleteFirmware } = props;
 
   const classes = useStyles();
 
   const handleEdit = () => {
-    setPutId(id);
+    setEditId(id);
   };
 
   const handleDelete = () => {
@@ -62,7 +62,7 @@ const RowBase = function RowBase(props: Props) {
   };
 
   return (
-    <TableRow className={classes.row} hover>
+    <TableRow className={classes.row}>
       <TableCell>{firmware.id}</TableCell>
       <TableCell>
         <a href={firmware.url} className={classes.versionCell}>
@@ -99,7 +99,7 @@ const Row = React.memo(
   connect(
     mapStateToProps,
     {
-      setPutId: actions.setPutId,
+      setEditId: actions.setEditId,
       deleteFirmware
     }
   )(RowBase)

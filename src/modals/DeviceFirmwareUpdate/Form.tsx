@@ -129,10 +129,9 @@ function UpdateDialogBase(props: Props) {
   }, [values]);
 
   return (
-    <form autoComplete="off" className={classes.form}>
+    <React.Fragment>
       <DialogTitle id="form-dialog-title">{`Updade Device Firmware ${initialData.id}`}</DialogTitle>
-      <DialogContent></DialogContent>
-      <DialogContent>
+      <DialogContent dividers>
         {apiCall.status === RequestStatus.FAILURE && (
           <div className={classes.error}>
             <Typography color="inherit">
@@ -204,7 +203,7 @@ function UpdateDialogBase(props: Props) {
           Update
         </Button>
       </DialogActions>
-    </form>
+    </React.Fragment>
   );
 }
 

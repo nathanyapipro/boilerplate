@@ -37,6 +37,7 @@ function UpdateDialogBase(props: Props) {
       open={Boolean(data)}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
+      scroll="paper"
     >
       {data && <Form handleClose={handleClose} initialData={data} />}
     </Dialog>

@@ -4,6 +4,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import { Theme } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
@@ -12,10 +13,14 @@ import Row from "./Row";
 import Loading from "../../components/Loading";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   table: {},
   tableBody: {
     position: "relative"
+  },
+  empty: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
   }
 }));
 
@@ -40,7 +45,13 @@ function TableDeviceFirmwareBase(props: Props) {
         <TableBody className={classes.tableBody}>
           <TableRow>
             <TableCell colSpan={8}>
-              <Typography>No Device Firmwares found.</Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={classes.empty}
+              >
+                No Device Firmwares found
+              </Typography>
             </TableCell>
           </TableRow>
         </TableBody>

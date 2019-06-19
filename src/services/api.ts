@@ -256,7 +256,7 @@ export class ApiClient {
   async getFirmwares(
     params: ApiGetFirmwaresParams
   ): Promise<ApiGetFirmwaresResponse> {
-    const url = `/cms/device/model`;
+    const url = `/cms/firmware`;
     const config = { ...this.getConfig(), params };
     const response = await this.axiosInstance.get<ApiGetFirmwaresResponse>(
       url,

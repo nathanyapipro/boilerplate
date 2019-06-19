@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     display: "flex",
-    padding: `${theme.spacing(4)}px ${theme.spacing(8)}px `
+    flexDirection: "column",
+    padding: `${theme.spacing(1)}px ${theme.spacing(8)}px ${theme.spacing(
+      4
+    )}px ${theme.spacing(8)}px`
   }
 }));
 

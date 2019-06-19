@@ -1,18 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import { Theme } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import { getFirmwares } from "../../states/api/actions";
 import TableDeviceFirmware from "../../components/TableDeviceFirmware";
-import UpdateDeviceFirmwareModal from "../../modals/DeviceFirmwareUpdate";
 import { ApiGetFirmwaresParams } from "../../services/api";
 import { actions } from "../../states/crud/actions";
 import Page from "../../layouts/AppLayout/Page";
-import Header from "../../components/SubSidebar/Header";
 
 interface ReduxStateProps {}
 
@@ -25,9 +21,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   title: {
     fontWeight: 600,
     flex: 1
-  },
-  icon: {
-    marginRight: theme.spacing(0.5)
   }
 }));
 
@@ -56,10 +49,6 @@ function DeviceFirmwareBase(props: Props) {
           >
             Device Firmware
           </Typography>
-          <Button color="primary" size="small" variant="contained">
-            <AddIcon className={classes.icon} fontSize="small" />
-            Create
-          </Button>
         </React.Fragment>
       }
       content={<TableDeviceFirmware />}

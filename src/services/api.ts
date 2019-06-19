@@ -253,6 +253,17 @@ export class ApiClient {
     return response.data;
   }
 
+  async deleteDeviceModel(
+    params: ApiDeleteDeviceModelParams
+  ): Promise<ApiDeleteDeviceModelResponse> {
+    const url = `/cms/device/model`;
+    const config = { ...this.getConfig(), params };
+    const response = await this.axiosInstance.delete<
+      ApiDeleteDeviceModelResponse
+    >(url, config);
+    return response.data;
+  }
+
   async getFirmwares(
     params: ApiGetFirmwaresParams
   ): Promise<ApiGetFirmwaresResponse> {

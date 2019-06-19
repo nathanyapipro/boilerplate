@@ -59,7 +59,7 @@ export interface User extends ModelBase {
 export interface DeviceManufacturer extends ModelBase {
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string;
   lastModifiedAdmin: string;
 }
 
@@ -67,7 +67,7 @@ export interface DeviceModel extends ModelBase {
   modelNumber: string;
   hardwareRevision: string;
   colorNumber: string;
-  imageUrl: string;
+  imageUrl?: string;
   lastModifiedAdminId: number;
 }
 
@@ -84,7 +84,7 @@ export interface Firmware extends ModelBase {
 export interface PodManufacturer extends ModelBase {
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string;
   lastModifiedAdmin: string;
 }
 

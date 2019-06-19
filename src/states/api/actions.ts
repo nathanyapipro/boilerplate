@@ -13,6 +13,7 @@ import {
   clearLocalStorageAuthCredentials
 } from "../../helpers/auth";
 import { validateBySchema } from "../../helpers/validators";
+import ApiPostFileResponseSchema from "../../schemas/api/ApiPostFileResponse";
 import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetDeviceModelsResponseSchema from "../../schemas/api/ApiGetDeviceModelsResponse";
 import ApiPostDeviceModelResponseSchema from "../../schemas/api/ApiPostDeviceModelResponse";
@@ -24,6 +25,8 @@ import ApiPutFirmwareResponseSchema from "../../schemas/api/ApiPutFirmwareRespon
 import ApiDeleteFirmwareResponseSchema from "../../schemas/api/ApiDeleteFirmwareResponse";
 import { AxiosError } from "axios";
 import { HasId } from "../../types";
+import { Dispatch } from "redux";
+import { Omit } from "../../types";
 
 export const actions = {
   login: createAsyncAction(
@@ -128,6 +131,99 @@ export const logout: ThunkActionCreator = () => async (
   }
   clearLocalStorageAuthCredentials();
   dispatch(actions.logout.success());
+};
+
+export const postFile = async (
+  input: Api.ApiPostFileParams,
+  dispatch: Dispatch<Actions>,
+  apiClient: Api.ApiClient
+) => {
+  dispatch(actions.postFile.request());
+
+  try {
+    const response = await apiClient.postFile(input);
+    validateBySchema(ApiPostFileResponseSchema, response);
+    dispatch(actions.postFile.success(response));
+    return response;
+  } catch (err) {
+    dispatch(actions.postFile.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const getDeviceModels: ThunkActionCreator<
+  Api.ApiGetDeviceModelsParams
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.getDeviceModels.request());
+
+  try {
+    const response = await apiClient.getDeviceModels(input);
+    validateBySchema(ApiGetDeviceModelsResponseSchema, response);
+    dispatch(actions.getDeviceModels.success(response));
+  } catch (err) {
+    dispatch(actions.getDeviceModels.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const postDeviceModel: ThunkActionCreator<
+  Api.ApiPostDeviceModelParams & Partial<Api.ApiPostFileParams>
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.postDeviceModel.request());
+  try {
+    // Get imageUrl from file
+    const { file, ...params } = input;
+    if (file) {
+      const postFileResponse = await postFile({ file }, dispatch, apiClient);
+      if (postFileResponse) {
+        params.imageUrl = postFileResponse.url;
+      }
+    }
+
+    const response = await apiClient.postDeviceModel(params);
+    validateBySchema(ApiPostDeviceModelResponseSchema, response);
+    dispatch(actions.postDeviceModel.success(response));
+  } catch (err) {
+    dispatch(actions.postDeviceModel.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const putDeviceModel: ThunkActionCreator<
+  Api.ApiPutDeviceModelParams & HasId & Partial<Api.ApiPostFileParams>
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.putDeviceModel.request());
+
+  try {
+    const { id, file, ...params } = input;
+    if (file) {
+      const postFileResponse = await postFile({ file }, dispatch, apiClient);
+      if (postFileResponse) {
+        params.imageUrl = postFileResponse.url;
+      }
+    }
+    const response = await apiClient.putDeviceModel(id, params);
+    validateBySchema(ApiPutDeviceModelResponseSchema, response);
+    dispatch(actions.putDeviceModel.success(response));
+  } catch (err) {
+    dispatch(actions.putDeviceModel.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
+export const deleteDeviceModel: ThunkActionCreator<
+  Api.ApiDeleteDeviceModelParams
+> = input => async (dispatch, _, { apiClient }) => {
+  dispatch(actions.deleteDeviceModel.request());
+
+  try {
+    const response = await apiClient.deleteDeviceModel(input);
+    validateBySchema(ApiDeleteDeviceModelResponseSchema, response);
+    dispatch(actions.deleteDeviceModel.success(response));
+  } catch (err) {
+    dispatch(actions.deleteDeviceModel.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
 };
 
 export const getFirmwares: ThunkActionCreator<

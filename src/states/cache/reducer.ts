@@ -105,11 +105,11 @@ export function cache(
     }
     case getType(apiActions.postFirmware.success):
     case getType(apiActions.putFirmware.success): {
-      const firmware = action.payload;
+      const item = action.payload;
 
       return {
         ...state,
-        firmwares: batchUpdate(state.firmwares, [firmware])
+        firmwares: batchUpdate(state.firmwares, [item])
       };
     }
     case getType(apiActions.deleteFirmware.success): {
@@ -117,6 +117,30 @@ export function cache(
       return {
         ...state,
         firmwares: batchDelete(state.firmwares, ids)
+      };
+    }
+    case getType(apiActions.getDeviceModels.success): {
+      const { list } = action.payload;
+
+      return {
+        ...state,
+        deviceModels: batchUpdate(state.deviceModels, list)
+      };
+    }
+    case getType(apiActions.postDeviceModel.success):
+    case getType(apiActions.putDeviceModel.success): {
+      const item = action.payload;
+
+      return {
+        ...state,
+        deviceModels: batchUpdate(state.deviceModels, [item])
+      };
+    }
+    case getType(apiActions.deleteDeviceModel.success): {
+      const { ids } = action.payload;
+      return {
+        ...state,
+        deviceModels: batchDelete(state.deviceModels, ids)
       };
     }
     default:

@@ -57,6 +57,7 @@ export function crud(
         ids
       };
     }
+    case getType(apiActions.deleteDeviceModel.success):
     case getType(apiActions.deleteFirmware.success): {
       const { ids } = action.payload;
 

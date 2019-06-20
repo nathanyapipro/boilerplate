@@ -28,10 +28,16 @@ export function getParamsfromRequest<T>(
 export function getModelIdFromRequest(
   requestConfig: AxiosRequestConfig
 ): string {
-  const match = getParamsfromRequest<{ modelId: string }>(
+  let match = getParamsfromRequest<{ modelId: string }>(
     requestConfig,
     `/:prefix/:modelType/:modelId`
   );
+  if (Number.isNaN(parseInt(match.params.modelId, 10))) {
+    match = getParamsfromRequest<{ modelId: string }>(
+      requestConfig,
+      `/:prefix/:modelType/:modelSubType/:modelId`
+    );
+  }
   return match.params.modelId;
 }
 

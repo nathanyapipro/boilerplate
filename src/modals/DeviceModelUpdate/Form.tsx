@@ -11,13 +11,15 @@ import { makeStyles } from "@material-ui/styles";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import { Theme } from "@material-ui/core";
 import { formatErrorMessage } from "../../helpers/api";
-import { postDeviceModel } from "../../states/api/actions";
+import { putDeviceModel } from "../../states/api/actions";
+import { HasId } from "../../types";
 import {
-  ApiPostDeviceModelParams,
+  ApiPutDeviceModelParams,
   ApiPostFileImageParams
 } from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
 import ImageDropzone from "../../components/ImageDropzone";
+import { DeviceModel } from "../../types/models";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface OwnProps {
+  initialData: DeviceModel;
   handleClose: () => void;
 }
 
@@ -51,8 +54,8 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-  postDeviceModel: (
-    params: ApiPostDeviceModelParams & ApiPostFileImageParams
+  putDeviceModel: (
+    params: ApiPutDeviceModelParams & Partial<ApiPostFileImageParams> & HasId
   ) => void;
 }
 
@@ -66,15 +69,15 @@ type FormValues = {
 
 function FormBase(props: Props) {
   const classes = useStyles();
-  const { handleClose, apiCall, postDeviceModel } = props;
+  const { handleClose, apiCall, putDeviceModel, initialData } = props;
 
   const requestStatus = apiCall.status;
   const previousRequestStatus = usePrevious<RequestStatus>(apiCall.status);
 
   const [values, setValues] = React.useState<FormValues>({
-    modelNumber: undefined,
-    hardwareRevision: undefined,
-    colorNumber: undefined
+    modelNumber: initialData.modelNumber,
+    hardwareRevision: initialData.hardwareRevision,
+    colorNumber: initialData.colorNumber
   });
 
   const [file, setFile] = React.useState<File | undefined>(undefined);
@@ -127,10 +130,11 @@ function FormBase(props: Props) {
   const handleSubmit = () => {
     if (!hasErrors) {
       const params = {
+        id: initialData.id,
         ...values,
         file
-      } as ApiPostDeviceModelParams & ApiPostFileImageParams;
-      postDeviceModel(params);
+      } as ApiPutDeviceModelParams & Partial<ApiPostFileImageParams> & HasId;
+      putDeviceModel(params);
     }
   };
 
@@ -205,7 +209,7 @@ function FormBase(props: Props) {
         </Typography>
         <div className={classes.field}>
           <ImageDropzone
-            value={file ? URL.createObjectURL(file) : undefined}
+            value={file ? URL.createObjectURL(file) : initialData.imageUrl}
             onChange={handleFileChange}
           />
         </div>
@@ -220,7 +224,7 @@ function FormBase(props: Props) {
           variant="contained"
           disabled={hasErrors || requestStatus === RequestStatus.FETCHING}
         >
-          Create
+          Update
         </Button>
       </DialogActions>
     </React.Fragment>
@@ -228,7 +232,7 @@ function FormBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const apiCall = state.api.postDeviceModel;
+  const apiCall = state.api.putDeviceModel;
 
   return {
     apiCall
@@ -238,7 +242,7 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
 const Form = connect(
   mapStateToProps,
   {
-    postDeviceModel
+    putDeviceModel
   }
 )(FormBase);
 

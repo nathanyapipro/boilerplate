@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     "&:focus": {
       outline: "unset",
       borderColor: theme.palette.primary.main
-    }
+    },
+    cursor: "pointer"
   },
   dropzone: {
     display: "flex",
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface OwnProps {
-  value?: File;
+  value?: string;
   onChange: (file?: File) => void;
 }
 
@@ -62,10 +63,10 @@ function ImageDropzone(props: Props) {
   const classes = useStyles();
   const { value, onChange } = props;
 
-  const onDrop = React.useCallback(acceptedFiles => {
+  const onDrop = React.useCallback((acceptedFiles: File[]) => {
     onChange(acceptedFiles[0]);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     multiple: false,
     onDrop
@@ -89,7 +90,7 @@ function ImageDropzone(props: Props) {
       <div className={classes.preview}>
         <div className={classes.thumb}>
           <div className={classes.thumbInner}>
-            <img src={URL.createObjectURL(value)} className={classes.image} />
+            <img src={value} alt="file-pewview" className={classes.image} />
           </div>
         </div>
       </div>

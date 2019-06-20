@@ -17,6 +17,8 @@ import {
   ApiPostFileImageParams
 } from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
+import ImageDropzone from "../../components/ImageDropzone";
+import { validateBySchema } from "../../helpers/validators";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
@@ -111,12 +113,11 @@ function FormBase(props: Props) {
     });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const { value } = e.target;
-    // setValues({
-    //   ...values,
-    //   file: value
-    // });
+  const handleFileChange = (file?: File) => {
+    setValues({
+      ...values,
+      file
+    });
   };
 
   React.useEffect(() => {
@@ -206,7 +207,10 @@ function FormBase(props: Props) {
         <Typography variant="caption" color="textSecondary">
           Image
         </Typography>
-        <TextField
+        <div className={classes.field}>
+          <ImageDropzone value={values.file} onChange={handleFileChange} />
+        </div>
+        {/* <TextField
           className={classes.field}
           margin="dense"
           variant="outlined"
@@ -215,7 +219,7 @@ function FormBase(props: Props) {
           onChange={handleFileChange}
           type="text"
           fullWidth
-        />
+        /> */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="default">

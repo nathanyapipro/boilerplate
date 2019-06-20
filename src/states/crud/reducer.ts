@@ -6,11 +6,13 @@ import { HasId } from "../../types";
 
 export interface CrudState {
   editId?: number;
+  isCreating: boolean;
   ids: number[];
   pagination?: Pagination;
 }
 
 const INITIAL_STATE = {
+  isCreating: false,
   ids: []
 };
 
@@ -21,6 +23,13 @@ export function crud(
   switch (action.type) {
     case getType(actions.reset): {
       return INITIAL_STATE;
+    }
+    case getType(actions.setIsCreating): {
+      const isCreating = action.payload;
+      return {
+        ...state,
+        isCreating
+      };
     }
     case getType(actions.setEditId): {
       const editId = action.payload;

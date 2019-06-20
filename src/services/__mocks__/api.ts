@@ -43,7 +43,10 @@ export function mockAxios(
   mock.onPost(/\/file$/).reply(config => {
     logAxiosConfig(config);
     try {
-      const result = fileController.postFile(config, store.getState());
+      const result = fileController.postFileImageImage(
+        config,
+        store.getState()
+      );
       return [200, result];
     } catch (e) {
       console.error("axios-mock-adapter: ", e);

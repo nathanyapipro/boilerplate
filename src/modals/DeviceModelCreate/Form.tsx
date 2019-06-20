@@ -10,11 +10,12 @@ import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import { Theme } from "@material-ui/core";
-import { Firmware } from "../../types/models";
 import { formatErrorMessage } from "../../helpers/api";
-import { putFirmware } from "../../states/api/actions";
-import { HasId } from "../../types";
-import { ApiPutFirmwareParams } from "../../services/api";
+import { postDeviceModel } from "../../states/api/actions";
+import {
+  ApiPostDeviceModelParams,
+  ApiPostFileImageParams
+} from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -41,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface OwnProps {
-  initialData: Firmware;
   handleClose: () => void;
 }
 
@@ -50,52 +50,73 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-  putFirmware: (params: HasId & ApiPutFirmwareParams) => void;
+  postDeviceModel: (
+    params: ApiPostDeviceModelParams & ApiPostFileImageParams
+  ) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+type FormValues = {
+  modelNumber?: string;
+  hardwareRevision?: string;
+  colorNumber?: string;
+  file?: File;
+};
+
 function FormBase(props: Props) {
   const classes = useStyles();
-  const { handleClose, initialData, apiCall, putFirmware } = props;
+  const { handleClose, apiCall, postDeviceModel } = props;
 
   const requestStatus = apiCall.status;
   const previousRequestStatus = usePrevious<RequestStatus>(apiCall.status);
 
-  const [values, setValues] = React.useState({
-    version: initialData.version,
-    model: initialData.model,
-    description: initialData.description
+  const [values, setValues] = React.useState<FormValues>({
+    modelNumber: undefined,
+    hardwareRevision: undefined,
+    colorNumber: undefined,
+    file: undefined
   });
 
   const [errors, setErrors] = React.useState({
-    version: undefined,
-    model: undefined,
-    description: undefined
+    modelNumber: undefined,
+    hardwareRevision: undefined,
+    colorNumber: undefined,
+    file: undefined
   });
 
-  const handleVersionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleModelNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValues({
       ...values,
-      version: value
+      modelNumber: value
     });
   };
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHardwareRevisionChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { value } = e.target;
     setValues({
       ...values,
-      model: value
+      hardwareRevision: value
     });
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleColorNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValues({
       ...values,
-      description: value
+      colorNumber: value
     });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const { value } = e.target;
+    // setValues({
+    //   ...values,
+    //   file: value
+    // });
   };
 
   React.useEffect(() => {
@@ -108,29 +129,33 @@ function FormBase(props: Props) {
   }, [previousRequestStatus, requestStatus, handleClose]);
 
   const handleSubmit = () => {
-    if (Object.keys(errors).length === 0) {
-      putFirmware({
-        id: initialData.id,
-        publishedDate: initialData.publishedDate,
+    if (!hasErrors) {
+      const params = {
         ...values
-      });
+      } as ApiPostDeviceModelParams & ApiPostFileImageParams;
+      postDeviceModel(params);
     }
   };
 
   React.useEffect(() => {
     const errors: any = {};
-    if (!values.version) {
-      errors.version = "Required";
+    if (!values.modelNumber) {
+      errors.modelNumber = "Required";
     }
-    if (!values.model) {
-      errors.model = "Required";
+    if (!values.hardwareRevision) {
+      errors.hardwareRevision = "Required";
+    }
+    if (!values.colorNumber) {
+      errors.colorNumber = "Required";
     }
     setErrors(errors);
   }, [values]);
 
+  const hasErrors = Object.keys(errors).length !== 0;
+
   return (
     <React.Fragment>
-      <DialogTitle id="form-dialog-title">{`Updade Device Firmware ${initialData.id}`}</DialogTitle>
+      <DialogTitle id="form-dialog-title">{`Create Device Model`}</DialogTitle>
       <DialogContent dividers>
         {apiCall.status === RequestStatus.FAILURE && (
           <div className={classes.error}>
@@ -140,55 +165,57 @@ function FormBase(props: Props) {
           </div>
         )}
         <Typography variant="caption" color="textSecondary">
-          Version
+          Model Number
         </Typography>
         <TextField
           className={classes.field}
           margin="dense"
           variant="outlined"
-          value={values.version}
-          error={Boolean(errors.version)}
-          onChange={handleVersionChange}
+          value={values.modelNumber}
+          error={Boolean(errors.modelNumber)}
+          onChange={handleModelNumberChange}
           type="text"
           fullWidth
         />
         <Typography variant="caption" color="textSecondary">
-          Model
+          Hardware Revision
         </Typography>
         <TextField
           className={classes.field}
           margin="dense"
           variant="outlined"
-          value={values.model}
-          error={Boolean(errors.model)}
-          onChange={handleModelChange}
+          value={values.hardwareRevision}
+          error={Boolean(errors.hardwareRevision)}
+          onChange={handleHardwareRevisionChange}
           type="text"
           fullWidth
         />
         <Typography variant="caption" color="textSecondary">
-          Description
+          Color Number
         </Typography>
         <TextField
           className={classes.field}
-          multiline
-          rows="4"
           margin="dense"
           variant="outlined"
-          value={values.description}
-          onChange={handleDescriptionChange}
+          value={values.colorNumber}
+          error={Boolean(errors.colorNumber)}
+          onChange={handleColorNumberChange}
           type="text"
           fullWidth
         />
         <Typography variant="caption" color="textSecondary">
-          Url
+          Image
         </Typography>
-        <Typography
+        <TextField
           className={classes.field}
-          variant="body1"
-          color="textPrimary"
-        >
-          {initialData.url}
-        </Typography>
+          margin="dense"
+          variant="outlined"
+          value={values.file}
+          error={Boolean(errors.file)}
+          onChange={handleFileChange}
+          type="text"
+          fullWidth
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="default">
@@ -198,9 +225,9 @@ function FormBase(props: Props) {
           onClick={handleSubmit}
           color="primary"
           variant="contained"
-          disabled={requestStatus === RequestStatus.FETCHING}
+          disabled={hasErrors || requestStatus === RequestStatus.FETCHING}
         >
-          Update
+          Create
         </Button>
       </DialogActions>
     </React.Fragment>
@@ -208,7 +235,7 @@ function FormBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const apiCall = state.api.putFirmware;
+  const apiCall = state.api.postDeviceModel;
 
   return {
     apiCall
@@ -218,7 +245,7 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
 const Form = connect(
   mapStateToProps,
   {
-    putFirmware
+    postDeviceModel
   }
 )(FormBase);
 

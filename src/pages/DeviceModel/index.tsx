@@ -14,6 +14,7 @@ import { push } from "connected-react-router";
 import * as queryString from "query-string";
 import { RouteComponentProps } from "react-router";
 // import DeviceModelUpdateModal from "../../modals/DeviceModelUpdate";
+import DeviceModelCreateModal from "../../modals/DeviceModelCreate";
 
 interface ReduxStateProps {}
 
@@ -75,6 +76,7 @@ function DeviceModelBase(props: Props) {
         content={<TableDeviceModel onPageChange={handlePageChange} />}
       />
       {/* <DeviceModelUpdateModal /> */}
+      <DeviceModelCreateModal />
     </React.Fragment>
   );
 }

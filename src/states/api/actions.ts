@@ -13,7 +13,7 @@ import {
   clearLocalStorageAuthCredentials
 } from "../../helpers/auth";
 import { validateBySchema } from "../../helpers/validators";
-import ApiPostFileResponseSchema from "../../schemas/api/ApiPostFileResponse";
+import ApiPostFileImageResponseSchema from "../../schemas/api/ApiPostFileImageResponse";
 import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetDeviceModelsResponseSchema from "../../schemas/api/ApiGetDeviceModelsResponse";
 import ApiPostDeviceModelResponseSchema from "../../schemas/api/ApiPostDeviceModelResponse";
@@ -38,11 +38,11 @@ export const actions = {
     "api/LOGOUT_SUCCESS",
     "api/LOGOUT_FAILURE"
   )<void, Api.ApiLogoutResponse, AxiosError>(),
-  postFile: createAsyncAction(
+  postFileImage: createAsyncAction(
     "api/POST_FILE_REQUEST",
     "api/POST_FILE_SUCCESS",
     "api/POST_FILE_FAILURE"
-  )<void, Api.ApiPostFileResponse, AxiosError>(),
+  )<void, Api.ApiPostFileImageResponse, AxiosError>(),
   getDeviceModels: createAsyncAction(
     "api/GET_DEVICE_MODELS_REQUEST",
     "api/GET_DEVICE_MODELS_SUCCESS",
@@ -132,20 +132,20 @@ export const logout: ThunkActionCreator = () => async (
   dispatch(actions.logout.success());
 };
 
-export const postFile = async (
-  input: Api.ApiPostFileParams,
+export const postFileImage = async (
+  input: Api.ApiPostFileImageParams,
   dispatch: Dispatch<Actions>,
   apiClient: Api.ApiClient
 ) => {
-  dispatch(actions.postFile.request());
+  dispatch(actions.postFileImage.request());
 
   try {
-    const response = await apiClient.postFile(input);
-    validateBySchema(ApiPostFileResponseSchema, response);
-    dispatch(actions.postFile.success(response));
+    const response = await apiClient.postFileImage(input);
+    validateBySchema(ApiPostFileImageResponseSchema, response);
+    dispatch(actions.postFileImage.success(response));
     return response;
   } catch (err) {
-    dispatch(actions.postFile.failure(err));
+    dispatch(actions.postFileImage.failure(err));
     handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
   }
 };
@@ -166,16 +166,20 @@ export const getDeviceModels: ThunkActionCreator<
 };
 
 export const postDeviceModel: ThunkActionCreator<
-  Api.ApiPostDeviceModelParams & Partial<Api.ApiPostFileParams>
+  Api.ApiPostDeviceModelParams & Partial<Api.ApiPostFileImageParams>
 > = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.postDeviceModel.request());
   try {
     // Get imageUrl from file
     const { file, ...params } = input;
     if (file) {
-      const postFileResponse = await postFile({ file }, dispatch, apiClient);
-      if (postFileResponse) {
-        params.imageUrl = postFileResponse.url;
+      const postFileImageResponse = await postFileImage(
+        { file },
+        dispatch,
+        apiClient
+      );
+      if (postFileImageResponse) {
+        params.imageUrl = postFileImageResponse.url;
       }
     }
 
@@ -189,16 +193,20 @@ export const postDeviceModel: ThunkActionCreator<
 };
 
 export const putDeviceModel: ThunkActionCreator<
-  Api.ApiPutDeviceModelParams & HasId & Partial<Api.ApiPostFileParams>
+  Api.ApiPutDeviceModelParams & HasId & Partial<Api.ApiPostFileImageParams>
 > = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.putDeviceModel.request());
 
   try {
     const { id, file, ...params } = input;
     if (file) {
-      const postFileResponse = await postFile({ file }, dispatch, apiClient);
-      if (postFileResponse) {
-        params.imageUrl = postFileResponse.url;
+      const postFileImageResponse = await postFileImage(
+        { file },
+        dispatch,
+        apiClient
+      );
+      if (postFileImageResponse) {
+        params.imageUrl = postFileImageResponse.url;
       }
     }
     const response = await apiClient.putDeviceModel(id, params);

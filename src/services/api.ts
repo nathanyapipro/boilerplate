@@ -23,10 +23,10 @@ export type ApiLoginParams = {
 export type ApiLoginResponse = User;
 export type ApiLogoutResponse = undefined;
 
-export type ApiPostFileParams = {
+export type ApiPostFileImageParams = {
   file: File;
 };
-export type ApiPostFileResponse = {
+export type ApiPostFileImageResponse = {
   url: string;
 };
 
@@ -197,7 +197,9 @@ export class ApiClient {
     return response.data;
   }
 
-  async postFile(params: ApiPostFileParams): Promise<ApiPostFileResponse> {
+  async postFileImage(
+    params: ApiPostFileImageParams
+  ): Promise<ApiPostFileImageResponse> {
     const url = `/file`;
     const config = this.getConfig();
     let formData = new FormData();
@@ -206,7 +208,7 @@ export class ApiClient {
       ...config.headers,
       "Content-Type": "multipart/form-data"
     };
-    const response = await this.axiosInstance.post<ApiPostFileResponse>(
+    const response = await this.axiosInstance.post<ApiPostFileImageResponse>(
       url,
       formData,
       config

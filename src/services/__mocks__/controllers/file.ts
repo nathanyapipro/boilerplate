@@ -1,12 +1,12 @@
 import faker from "faker";
 import { AxiosRequestConfig } from "axios";
-import { ApiPostFileResponse } from "../../api";
+import { ApiPostFileImageResponse } from "../../api";
 import { StoreState } from "../../../states";
 
-export function postFile(
+export function postFileImageImage(
   requestConfig: AxiosRequestConfig,
   store: StoreState
-): ApiPostFileResponse {
+): ApiPostFileImageResponse {
   return {
     url: faker.image.imageUrl(400, 400)
   };

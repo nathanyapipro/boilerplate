@@ -18,7 +18,6 @@ import {
 } from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
 import ImageDropzone from "../../components/ImageDropzone";
-import { validateBySchema } from "../../helpers/validators";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
@@ -63,7 +62,6 @@ type FormValues = {
   modelNumber?: string;
   hardwareRevision?: string;
   colorNumber?: string;
-  file?: File;
 };
 
 function FormBase(props: Props) {
@@ -76,15 +74,15 @@ function FormBase(props: Props) {
   const [values, setValues] = React.useState<FormValues>({
     modelNumber: undefined,
     hardwareRevision: undefined,
-    colorNumber: undefined,
-    file: undefined
+    colorNumber: undefined
   });
+
+  const [file, setFile] = React.useState<File | undefined>(undefined);
 
   const [errors, setErrors] = React.useState({
     modelNumber: undefined,
     hardwareRevision: undefined,
-    colorNumber: undefined,
-    file: undefined
+    colorNumber: undefined
   });
 
   const handleModelNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,10 +112,7 @@ function FormBase(props: Props) {
   };
 
   const handleFileChange = (file?: File) => {
-    setValues({
-      ...values,
-      file
-    });
+    setFile(file);
   };
 
   React.useEffect(() => {
@@ -132,7 +127,8 @@ function FormBase(props: Props) {
   const handleSubmit = () => {
     if (!hasErrors) {
       const params = {
-        ...values
+        ...values,
+        file
       } as ApiPostDeviceModelParams & ApiPostFileImageParams;
       postDeviceModel(params);
     }
@@ -140,6 +136,7 @@ function FormBase(props: Props) {
 
   React.useEffect(() => {
     const errors: any = {};
+    console.log(values);
     if (!values.modelNumber) {
       errors.modelNumber = "Required";
     }
@@ -208,18 +205,8 @@ function FormBase(props: Props) {
           Image
         </Typography>
         <div className={classes.field}>
-          <ImageDropzone value={values.file} onChange={handleFileChange} />
+          <ImageDropzone value={file} onChange={handleFileChange} />
         </div>
-        {/* <TextField
-          className={classes.field}
-          margin="dense"
-          variant="outlined"
-          value={values.file}
-          error={Boolean(errors.file)}
-          onChange={handleFileChange}
-          type="text"
-          fullWidth
-        /> */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="default">

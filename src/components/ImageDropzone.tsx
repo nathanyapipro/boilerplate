@@ -9,8 +9,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     flex: "1 1 auto",
+    border: "2px solid transparent",
+    borderRadius: theme.shape.borderRadius,
     "&:focus": {
-      outlineColor: theme.palette.primary.main
+      outline: "unset",
+      borderColor: theme.palette.primary.main
     }
   },
   dropzone: {
@@ -60,8 +63,6 @@ function ImageDropzone(props: Props) {
   const { value, onChange } = props;
 
   const onDrop = React.useCallback(acceptedFiles => {
-    // Do something with the files
-    console.log(acceptedFiles);
     onChange(acceptedFiles[0]);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -73,13 +74,9 @@ function ImageDropzone(props: Props) {
   const renderDropZone = () => {
     return (
       <div className={classes.dropzone}>
-        {isDragActive ? (
-          <Typography color="textSecondary">Drop the image here ...</Typography>
-        ) : (
-          <Typography color="textSecondary">
-            Drag 'n' drop some image here, or click to select image
-          </Typography>
-        )}
+        <Typography color="textSecondary" variant="body2">
+          Drag and drop a file to upload
+        </Typography>
       </div>
     );
   };

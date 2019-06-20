@@ -49,6 +49,14 @@ export function crud(
         pagination
       };
     }
+    case getType(apiActions.postDeviceModel.success): {
+      const data = action.payload;
+      const ids = [...state.ids, data.id];
+      return {
+        ...state,
+        ids
+      };
+    }
     case getType(apiActions.deleteFirmware.success): {
       const { ids } = action.payload;
 

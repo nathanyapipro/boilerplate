@@ -7,7 +7,7 @@ export default function generateFirmware(): ById<Firmware> {
     "1": {
       id: 1,
       description: "LED UI Update",
-      model: "Airgraft001",
+      models: [1, 2],
       version: "AG0.01.8",
       url: `
 https://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com/cms/app_dfu_package.zip`,
@@ -20,7 +20,7 @@ https://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com
     "2": {
       id: 2,
       description: faker.lorem.words(),
-      model: "Airgraft001",
+      models: [1, 2],
       version: "AG0.01.3",
       url: `
 https://s3.ca-central-1.amazonaws.com/elasticbeanstalk-ca-central-1-761850581753/airgraft_dfu_AG0.01.3.zip`,

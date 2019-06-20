@@ -97,19 +97,40 @@ export function cache(
     }
     case getType(apiActions.getFirmwares.success): {
       const { list } = action.payload;
+      let deviceModels: DeviceModel[] = [];
+      const firmwares = list.map(nestedFirmware => {
+        const firmware = {
+          ...nestedFirmware,
+          models: nestedFirmware.models.map(deviceModel => {
+            deviceModels.push(deviceModel);
+            return deviceModel.id;
+          })
+        };
+        return firmware;
+      });
 
       return {
         ...state,
-        firmwares: batchUpdate(state.firmwares, list)
+        firmwares: batchUpdate(state.firmwares, firmwares),
+        deviceModels: batchUpdate(state.deviceModels, deviceModels)
       };
     }
     case getType(apiActions.postFirmware.success):
     case getType(apiActions.putFirmware.success): {
       const item = action.payload;
+      let deviceModels: DeviceModel[] = [];
+      const firmware = {
+        ...item,
+        models: item.models.map(deviceModel => {
+          deviceModels.push(deviceModel);
+          return deviceModel.id;
+        })
+      };
 
       return {
         ...state,
-        firmwares: batchUpdate(state.firmwares, [item])
+        firmwares: batchUpdate(state.firmwares, [firmware]),
+        deviceModels: batchUpdate(state.deviceModels, deviceModels)
       };
     }
     case getType(apiActions.deleteFirmware.success): {

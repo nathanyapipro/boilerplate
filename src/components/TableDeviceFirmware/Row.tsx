@@ -69,7 +69,7 @@ const RowBase = function RowBase(props: Props) {
           {firmware.version}
         </a>
       </TableCell>
-      <TableCell>{firmware.model}</TableCell>
+      <TableCell>{firmware.models}</TableCell>
       <TableCell colSpan={2}>{firmware.description}</TableCell>
       <TableCell>{dateHelper.format(firmware.publishedDate)}</TableCell>
       <TableCell>{dateHelper.format(firmware.modifiedDate)}</TableCell>

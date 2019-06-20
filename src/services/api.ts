@@ -4,7 +4,13 @@ import axios, {
   // AxiosRequestConfig
 } from "axios";
 import * as retryAxios from "retry-axios";
-import { Paginated, User, DeviceModel, Firmware } from "../types/models";
+import {
+  Paginated,
+  User,
+  DeviceModel,
+  Firmware,
+  NestedFirmware
+} from "../types/models";
 import { HttpStatusCode } from "../helpers/http";
 import { getLocalStorageAuthUuid } from "../helpers/auth";
 import sha1 from "sha1";
@@ -51,13 +57,13 @@ export type ApiDeleteDeviceModelParams = { ids: number[] };
 export type ApiDeleteDeviceModelResponse = { ids: number[] };
 
 export type ApiGetFirmwaresParams = PaginatedRequestParams;
-export type ApiGetFirmwaresResponse = Paginated<Firmware>;
+export type ApiGetFirmwaresResponse = Paginated<NestedFirmware>;
 
 export type ApiPostFirmwareParams = Omit<
   Firmware,
   "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
 >;
-export type ApiPostFirmwareResponse = Firmware;
+export type ApiPostFirmwareResponse = NestedFirmware;
 
 export type ApiPutFirmwareParams = Partial<
   Omit<
@@ -70,7 +76,7 @@ export type ApiPutFirmwareParams = Partial<
     | "url"
   >
 >;
-export type ApiPutFirmwareResponse = Firmware;
+export type ApiPutFirmwareResponse = NestedFirmware;
 
 export type ApiDeleteFirmwareParams = { ids: number[] };
 export type ApiDeleteFirmwareResponse = { ids: number[] };

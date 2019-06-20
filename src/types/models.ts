@@ -71,14 +71,27 @@ export interface DeviceModel extends ModelBase {
   lastModifiedAdminId: number;
 }
 
-export interface Firmware extends ModelBase {
+interface FirmwareBase extends ModelBase {
   description: string;
-  model: string;
   publishedDate: string;
   url: string;
   version: string;
   deleted: boolean;
   lastModifiedAdminId: number;
+}
+
+export interface Firmware extends FirmwareBase {
+  description: string;
+  models: number[];
+  publishedDate: string;
+  url: string;
+  version: string;
+  deleted: boolean;
+  lastModifiedAdminId: number;
+}
+
+export interface NestedFirmware extends FirmwareBase {
+  models: DeviceModel[];
 }
 
 export interface PodManufacturer extends ModelBase {

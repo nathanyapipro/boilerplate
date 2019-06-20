@@ -64,13 +64,13 @@ function FormBase(props: Props) {
 
   const [values, setValues] = React.useState({
     version: initialData.version,
-    model: initialData.model,
+    models: initialData.models,
     description: initialData.description
   });
 
   const [errors, setErrors] = React.useState({
     version: undefined,
-    model: undefined,
+    models: undefined,
     description: undefined
   });
 
@@ -82,11 +82,11 @@ function FormBase(props: Props) {
     });
   };
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleModelsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValues({
       ...values,
-      model: value
+      models: []
     });
   };
 
@@ -122,8 +122,8 @@ function FormBase(props: Props) {
     if (!values.version) {
       errors.version = "Required";
     }
-    if (!values.model) {
-      errors.model = "Required";
+    if (!values.models) {
+      errors.models = "Required";
     }
     setErrors(errors);
   }, [values]);
@@ -159,9 +159,9 @@ function FormBase(props: Props) {
           className={classes.field}
           margin="dense"
           variant="outlined"
-          value={values.model}
-          error={Boolean(errors.model)}
-          onChange={handleModelChange}
+          value={values.models}
+          error={Boolean(errors.models)}
+          onChange={handleModelsChange}
           type="text"
           fullWidth
         />

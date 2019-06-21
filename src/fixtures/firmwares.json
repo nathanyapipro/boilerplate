@@ -1,1 +1,26 @@
-{"1":{"id":1,"description":"LED UI Update","models":[1,2],"version":"AG0.01.8","url":"\nhttps://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com/cms/app_dfu_package.zip","deleted":false,"publishedDate":"2019-06-21T17:50:51.367Z","lastModifiedAdminId":1,"createdDate":"2019-06-21T17:50:51.367Z","modifiedDate":"2019-06-21T17:50:51.367Z"},"2":{"id":2,"description":"sed aut maiores","models":[1,2],"version":"AG0.01.3","url":"\nhttps://s3.ca-central-1.amazonaws.com/elasticbeanstalk-ca-central-1-761850581753/airgraft_dfu_AG0.01.3.zip","deleted":false,"publishedDate":"2019-06-21T17:50:51.368Z","lastModifiedAdminId":1,"createdDate":"2019-06-21T17:50:51.368Z","modifiedDate":"2019-06-21T17:50:51.368Z"}}
+{
+  "1": {
+    "id": 1,
+    "description": "LED UI Update",
+    "models": [1, 2],
+    "version": "AG0.01.8",
+    "url": "\nhttps://elasticbeanstalk-ca-central-1-761850581753.s3.ca-central-1.amazonaws.com/cms/app_dfu_package.zip",
+    "deleted": false,
+    "publishedDate": "2019-06-21T17:50:51.367Z",
+    "lastModifiedAdminId": 1,
+    "createdDate": "2019-06-21T17:50:51.367Z",
+    "modifiedDate": "2019-06-21T17:50:51.367Z"
+  },
+  "2": {
+    "id": 2,
+    "description": "sed aut maiores",
+    "models": [1, 2],
+    "version": "AG0.01.3",
+    "url": "\nhttps://s3.ca-central-1.amazonaws.com/elasticbeanstalk-ca-central-1-761850581753/airgraft_dfu_AG0.01.3.zip",
+    "deleted": false,
+    "publishedDate": "2019-06-21T17:50:51.368Z",
+    "lastModifiedAdminId": 1,
+    "createdDate": "2019-06-21T17:50:51.368Z",
+    "modifiedDate": "2019-06-21T17:50:51.368Z"
+  }
+}

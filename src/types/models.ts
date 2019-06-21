@@ -51,9 +51,7 @@ export interface User extends ModelBase {
   parentId?: number;
   profiles: UserProfile[];
   roles: UserRole[];
-  name: string;
-  isAdmin: boolean;
-  createdDate: string;
+  name?: string;
 }
 
 export interface DeviceManufacturer extends ModelBase {

@@ -18,16 +18,16 @@ export function mockAxios(
   console.log("axios-mock-adapter: enabled");
   const mock = new MockAdapter(axiosInstance, { delayResponse: 500 });
 
-  mock.onPost(/\/cms\/account\/login$/).reply(config => {
-    logAxiosConfig(config);
-    try {
-      const result = authController.login(config);
-      return [200, result];
-    } catch (e) {
-      console.error("axios-mock-adapter: ", e);
-      return [500, e];
-    }
-  });
+  // mock.onPost(/\/cms\/account\/login$/).reply(config => {
+  //   logAxiosConfig(config);
+  //   try {
+  //     const result = authController.login(config);
+  //     return [200, result];
+  //   } catch (e) {
+  //     console.error("axios-mock-adapter: ", e);
+  //     return [500, e];
+  //   }
+  // });
 
   mock.onPost(/\/cms\/account\/logout$/).reply(config => {
     logAxiosConfig(config);
@@ -62,19 +62,19 @@ export function mockAxios(
     }
   });
 
-  mock.onGet(/\/cms\/device\/model$/).reply(config => {
-    logAxiosConfig(config);
-    try {
-      const result = deviceModelController.getDeviceModels(
-        config,
-        store.getState()
-      );
-      return [200, result];
-    } catch (e) {
-      console.error("axios-mock-adapter: ", e);
-      return [500, e];
-    }
-  });
+  // mock.onGet(/\/cms\/device\/model$/).reply(config => {
+  //   logAxiosConfig(config);
+  //   try {
+  //     const result = deviceModelController.getDeviceModels(
+  //       config,
+  //       store.getState()
+  //     );
+  //     return [200, result];
+  //   } catch (e) {
+  //     console.error("axios-mock-adapter: ", e);
+  //     return [500, e];
+  //   }
+  // });
 
   mock.onPost(/\/cms\/device\/model$/).reply(config => {
     logAxiosConfig(config);

@@ -13,7 +13,6 @@ export default function generateUsers(): ById<User> {
       roles: [],
       name: "Admin",
       email: "admin@airgraft.com",
-      isAdmin: true,
       createdDate: new Date().toISOString(),
       modifiedDate: new Date().toISOString()
     }

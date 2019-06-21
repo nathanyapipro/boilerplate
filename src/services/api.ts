@@ -36,6 +36,13 @@ export type ApiPostFileImageResponse = {
   url: string;
 };
 
+export type ApiPostFileFirmwareParams = {
+  file: File;
+};
+export type ApiPostFileFirmwareResponse = {
+  url: string;
+};
+
 export type ApiGetDeviceModelsParams = PaginatedRequestParams;
 export type ApiGetDeviceModelsResponse = Paginated<DeviceModel>;
 
@@ -68,12 +75,7 @@ export type ApiPostFirmwareResponse = NestedFirmware;
 export type ApiPutFirmwareParams = Partial<
   Omit<
     Firmware,
-    | "id"
-    | "createdDate"
-    | "modifiedDate"
-    | "lastModifiedAdminId"
-    | "deleted"
-    | "url"
+    "id" | "createdDate" | "modifiedDate" | "lastModifiedAdminId" | "deleted"
   >
 >;
 export type ApiPutFirmwareResponse = NestedFirmware;
@@ -206,7 +208,7 @@ export class ApiClient {
   async postFileImage(
     params: ApiPostFileImageParams
   ): Promise<ApiPostFileImageResponse> {
-    const url = `/file`;
+    const url = `/file/image`;
     const config = this.getConfig();
     let formData = new FormData();
     formData.append("file", params.file);
@@ -215,6 +217,25 @@ export class ApiClient {
       "Content-Type": "multipart/form-data"
     };
     const response = await this.axiosInstance.post<ApiPostFileImageResponse>(
+      url,
+      formData,
+      config
+    );
+    return response.data;
+  }
+
+  async postFileFirmware(
+    params: ApiPostFileFirmwareParams
+  ): Promise<ApiPostFileFirmwareResponse> {
+    const url = `/file/firmware`;
+    const config = this.getConfig();
+    let formData = new FormData();
+    formData.append("file", params.file);
+    config.headers = {
+      ...config.headers,
+      "Content-Type": "multipart/form-data"
+    };
+    const response = await this.axiosInstance.post<ApiPostFileFirmwareResponse>(
       url,
       formData,
       config

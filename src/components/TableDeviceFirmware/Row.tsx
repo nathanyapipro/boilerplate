@@ -2,9 +2,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import { Theme } from "@material-ui/core";
+import { Theme, Avatar } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import { Firmware } from "../../types/models";
+import { Firmware, DeviceModel } from "../../types/models";
+import { ById } from "../../types";
 import * as dateHelper from "../../helpers/date";
 import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
@@ -13,6 +14,12 @@ import EditIcon from "@material-ui/icons/Edit";
 import { actions } from "../../states/crud/actions";
 import { deleteFirmware } from "../../states/api/actions";
 import { ApiDeleteFirmwareParams } from "../../services/api";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import { formatDeviceModel } from "../../helpers/deviceModel";
+import { returnStatement } from "@babel/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {
@@ -33,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ReduxStateProps {
   firmware: Firmware;
+  deviceModelsById: ById<DeviceModel>;
 }
 
 interface ReduxDispatchProps {
@@ -47,7 +55,7 @@ interface OwnProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const RowBase = function RowBase(props: Props) {
-  const { id, firmware, setEditId, deleteFirmware } = props;
+  const { id, firmware, setEditId, deleteFirmware, deviceModelsById } = props;
 
   const classes = useStyles();
 
@@ -61,6 +69,20 @@ const RowBase = function RowBase(props: Props) {
     });
   };
 
+  const renderDeviceModels = () => {
+    return firmware.models.map(deviceModelId => {
+      const deviceModel = deviceModelsById[deviceModelId];
+      return (
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar alt="image" src={deviceModel.imageUrl} />
+          </ListItemAvatar>
+          <ListItemText>{formatDeviceModel(deviceModel)}</ListItemText>
+        </ListItem>
+      );
+    });
+  };
+
   return (
     <TableRow className={classes.row}>
       <TableCell>{firmware.id}</TableCell>
@@ -69,7 +91,9 @@ const RowBase = function RowBase(props: Props) {
           {firmware.version}
         </a>
       </TableCell>
-      <TableCell>{firmware.models}</TableCell>
+      <TableCell colSpan={2}>
+        <List>{renderDeviceModels()}</List>
+      </TableCell>
       <TableCell colSpan={2}>{firmware.description}</TableCell>
       <TableCell>{dateHelper.format(firmware.publishedDate)}</TableCell>
       <TableCell>{dateHelper.format(firmware.modifiedDate)}</TableCell>
@@ -91,7 +115,8 @@ const mapStateToProps = (state: StoreState, ownProps: OwnProps) => {
   const firmware = byId[id];
 
   return {
-    firmware
+    firmware,
+    deviceModelsById: state.cache.deviceModels.byId
   };
 };
 

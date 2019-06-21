@@ -106,7 +106,7 @@ function TableDeviceFirmwareBase(props: Props) {
         <TableBody className={classes.tableBody}>
           {ids.length === 0 && apiCall.status === RequestStatus.SUCCESS ? (
             <TableRow>
-              <TableCell colSpan={8}>
+              <TableCell colSpan={9}>
                 <Typography
                   variant="body1"
                   color="textSecondary"
@@ -118,7 +118,7 @@ function TableDeviceFirmwareBase(props: Props) {
             </TableRow>
           ) : apiCall.status === RequestStatus.FETCHING ? (
             <TableRow>
-              <TableCell colSpan={8}>
+              <TableCell colSpan={9}>
                 <Loading />
               </TableCell>
             </TableRow>

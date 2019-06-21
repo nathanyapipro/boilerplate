@@ -74,20 +74,14 @@ export interface DeviceModel extends ModelBase {
 interface FirmwareBase extends ModelBase {
   description: string;
   publishedDate: string;
-  url: string;
+  url?: string;
   version: string;
   deleted: boolean;
   lastModifiedAdminId: number;
 }
 
 export interface Firmware extends FirmwareBase {
-  description: string;
   models: number[];
-  publishedDate: string;
-  url: string;
-  version: string;
-  deleted: boolean;
-  lastModifiedAdminId: number;
 }
 
 export interface NestedFirmware extends FirmwareBase {

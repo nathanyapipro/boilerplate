@@ -11,7 +11,7 @@ const Head = (_: Props) => {
       <TableRow>
         <TableCell>Id</TableCell>
         <TableCell>Version</TableCell>
-        <TableCell>Model</TableCell>
+        <TableCell colSpan={2}>Models</TableCell>
         <TableCell colSpan={2}>Description</TableCell>
         <TableCell>Published At</TableCell>
         <TableCell>Modified At</TableCell>

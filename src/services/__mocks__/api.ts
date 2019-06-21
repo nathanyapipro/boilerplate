@@ -40,13 +40,21 @@ export function mockAxios(
     }
   });
 
-  mock.onPost(/\/file$/).reply(config => {
+  mock.onPost(/\/file\/image$/).reply(config => {
     logAxiosConfig(config);
     try {
-      const result = fileController.postFileImageImage(
-        config,
-        store.getState()
-      );
+      const result = fileController.postFileImage(config, store.getState());
+      return [200, result];
+    } catch (e) {
+      console.error("axios-mock-adapter: ", e);
+      return [500, e];
+    }
+  });
+
+  mock.onPost(/\/file\/firmware$/).reply(config => {
+    logAxiosConfig(config);
+    try {
+      const result = fileController.postFileFirmware(config, store.getState());
       return [200, result];
     } catch (e) {
       console.error("axios-mock-adapter: ", e);

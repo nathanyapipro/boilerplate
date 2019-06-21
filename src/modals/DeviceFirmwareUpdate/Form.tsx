@@ -16,6 +16,9 @@ import { putFirmware } from "../../states/api/actions";
 import { HasId } from "../../types";
 import { ApiPutFirmwareParams } from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
+import DeviceModelAutocomplete, {
+  DeviceModelAutocompleteValue
+} from "../../components/Autocomplete/DeviceModel";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
@@ -25,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%"
   },
   field: {
+    display: "flex",
     marginTop: 0,
     marginBottom: theme.spacing(1)
   },
@@ -82,11 +86,10 @@ function FormBase(props: Props) {
     });
   };
 
-  const handleModelsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const handleModelsChange = (value: DeviceModelAutocompleteValue) => {
     setValues({
       ...values,
-      models: []
+      models: value ? (value instanceof Array ? value : [value]) : []
     });
   };
 
@@ -153,18 +156,14 @@ function FormBase(props: Props) {
           fullWidth
         />
         <Typography variant="caption" color="textSecondary">
-          Model
+          Models
         </Typography>
-        <TextField
-          className={classes.field}
-          margin="dense"
-          variant="outlined"
-          value={values.models}
-          error={Boolean(errors.models)}
-          onChange={handleModelsChange}
-          type="text"
-          fullWidth
-        />
+        <div className={classes.field}>
+          <DeviceModelAutocomplete
+            value={values.models}
+            onChange={handleModelsChange}
+          />
+        </div>
         <Typography variant="caption" color="textSecondary">
           Description
         </Typography>

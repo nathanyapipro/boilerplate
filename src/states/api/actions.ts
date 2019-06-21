@@ -14,6 +14,7 @@ import {
 } from "../../helpers/auth";
 import { validateBySchema } from "../../helpers/validators";
 import ApiPostFileImageResponseSchema from "../../schemas/api/ApiPostFileImageResponse";
+import ApiPostFileFirmwareResponseSchema from "../../schemas/api/ApiPostFileFirmwareResponse";
 import ApiLoginResponseSchema from "../../schemas/api/ApiLoginResponse";
 import ApiGetDeviceModelsResponseSchema from "../../schemas/api/ApiGetDeviceModelsResponse";
 import ApiPostDeviceModelResponseSchema from "../../schemas/api/ApiPostDeviceModelResponse";
@@ -39,10 +40,15 @@ export const actions = {
     "api/LOGOUT_FAILURE"
   )<void, Api.ApiLogoutResponse, AxiosError>(),
   postFileImage: createAsyncAction(
-    "api/POST_FILE_REQUEST",
-    "api/POST_FILE_SUCCESS",
-    "api/POST_FILE_FAILURE"
+    "api/POST_FILE_IMAGE_REQUEST",
+    "api/POST_FILE_IMAGE_SUCCESS",
+    "api/POST_FILE_IMAGE_FAILURE"
   )<void, Api.ApiPostFileImageResponse, AxiosError>(),
+  postFileFirmware: createAsyncAction(
+    "api/POST_FILE_FIRMWARE_REQUEST",
+    "api/POST_FILE_FIRMWARE_SUCCESS",
+    "api/POST_FILE_FIRMWARE_FAILURE"
+  )<void, Api.ApiPostFileFirmwareResponse, AxiosError>(),
   getDeviceModels: createAsyncAction(
     "api/GET_DEVICE_MODELS_REQUEST",
     "api/GET_DEVICE_MODELS_SUCCESS",
@@ -150,6 +156,24 @@ export const postFileImage = async (
   }
 };
 
+export const postFileFirmware = async (
+  input: Api.ApiPostFileFirmwareParams,
+  dispatch: Dispatch<Actions>,
+  apiClient: Api.ApiClient
+) => {
+  dispatch(actions.postFileFirmware.request());
+
+  try {
+    const response = await apiClient.postFileFirmware(input);
+    validateBySchema(ApiPostFileFirmwareResponseSchema, response);
+    dispatch(actions.postFileFirmware.success(response));
+    return response;
+  } catch (err) {
+    dispatch(actions.postFileFirmware.failure(err));
+    handleInstanceOfHttpStatusUnauthorizedOrForbidden(dispatch, apiClient, err);
+  }
+};
+
 export const getDeviceModels: ThunkActionCreator<
   Api.ApiGetDeviceModelsParams
 > = input => async (dispatch, _, { apiClient }) => {
@@ -249,11 +273,23 @@ export const getFirmwares: ThunkActionCreator<
 };
 
 export const postFirmware: ThunkActionCreator<
-  Api.ApiPostFirmwareParams
+  Api.ApiPostFirmwareParams & Api.ApiPostFileImageParams
 > = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.postFirmware.request());
 
   try {
+    // Get firmwareUrl from file
+    const { file, ...params } = input;
+    if (file) {
+      const postFileFirmwareResponse = await postFileFirmware(
+        { file },
+        dispatch,
+        apiClient
+      );
+      if (postFileFirmwareResponse) {
+        params.url = postFileFirmwareResponse.url;
+      }
+    }
     const response = await apiClient.postFirmware(input);
     validateBySchema(ApiPostFirmwareResponseSchema, response);
     dispatch(actions.postFirmware.success(response));
@@ -264,13 +300,22 @@ export const postFirmware: ThunkActionCreator<
 };
 
 export const putFirmware: ThunkActionCreator<
-  Api.ApiPutFirmwareParams & HasId
+  Api.ApiPutFirmwareParams & HasId & Partial<Api.ApiPostFileImageParams>
 > = input => async (dispatch, _, { apiClient }) => {
   dispatch(actions.putFirmware.request());
 
-  const { id, ...params } = input;
-
   try {
+    const { id, file, ...params } = input;
+    if (file) {
+      const postFileFirmwareResponse = await postFileFirmware(
+        { file },
+        dispatch,
+        apiClient
+      );
+      if (postFileFirmwareResponse) {
+        params.url = postFileFirmwareResponse.url;
+      }
+    }
     const response = await apiClient.putFirmware(id, params);
     validateBySchema(ApiPutFirmwareResponseSchema, response);
     dispatch(actions.putFirmware.success(response));

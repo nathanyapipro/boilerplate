@@ -40,8 +40,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick",
-    "cz": "npm run precommit && git add --all && git cz",
+    "precommit": "pretty-quick --staged",
+    "cz": "npm run precommit && git cz",
     "schemas": "ts-node -O '{  \"module\": \"commonjs\", \"resolveJsonModule\": true  }' ./src/scripts/schemas/index.ts",
     "seeds": "ts-node -O '{  \"module\": \"commonjs\", \"resolveJsonModule\": true  }' ./src/scripts/seeds/index.ts",
     "types": "ts-node -O '{  \"module\": \"commonjs\", \"resolveJsonModule\": true  }' ./src/scripts/types/index.ts"

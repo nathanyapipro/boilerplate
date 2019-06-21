@@ -10,16 +10,17 @@ import { StoreState } from "../../states";
 import { makeStyles } from "@material-ui/styles";
 import { ApiCall, RequestStatus } from "../../states/api/reducer";
 import { Theme } from "@material-ui/core";
-import { Firmware } from "../../types/models";
 import { formatErrorMessage } from "../../helpers/api";
-import { putFirmware } from "../../states/api/actions";
-import { HasId } from "../../types";
-import { ApiPutFirmwareParams } from "../../services/api";
+import { postFirmware } from "../../states/api/actions";
+import {
+  ApiPostFirmwareParams,
+  ApiPostFileImageParams
+} from "../../services/api";
 import usePrevious from "../../hooks/usePrevious";
+import FileDropzone from "../../components/FileDropzone";
 import DeviceModelAutocomplete, {
   DeviceModelAutocompleteValue
 } from "../../components/Autocomplete/DeviceModel";
-import { $deviceModelsById } from "../../states/cache/selectors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%"
   },
   field: {
-    display: "flex",
     marginTop: 0,
     marginBottom: theme.spacing(1)
   },
@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface OwnProps {
-  initialData: Firmware;
   handleClose: () => void;
 }
 
@@ -55,28 +54,39 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-  putFirmware: (params: HasId & ApiPutFirmwareParams) => void;
+  postFirmware: (
+    params: ApiPostFirmwareParams & ApiPostFileImageParams
+  ) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+type FormValues = {
+  version?: string;
+  models?: number[];
+  description?: string;
+};
+
 function FormBase(props: Props) {
   const classes = useStyles();
-  const { handleClose, initialData, apiCall, putFirmware } = props;
+  const { handleClose, apiCall, postFirmware } = props;
 
   const requestStatus = apiCall.status;
   const previousRequestStatus = usePrevious<RequestStatus>(apiCall.status);
 
-  const [values, setValues] = React.useState({
-    version: initialData.version,
-    models: initialData.models,
-    description: initialData.description
+  const [values, setValues] = React.useState<FormValues>({
+    version: undefined,
+    models: undefined,
+    description: undefined
   });
+
+  const [file, setFile] = React.useState<File | undefined>(undefined);
 
   const [errors, setErrors] = React.useState({
     version: undefined,
     models: undefined,
-    description: undefined
+    description: undefined,
+    file: undefined
   });
 
   const handleVersionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +112,10 @@ function FormBase(props: Props) {
     });
   };
 
+  const handleFileChange = (file?: File) => {
+    setFile(file);
+  };
+
   React.useEffect(() => {
     if (
       previousRequestStatus === RequestStatus.FETCHING &&
@@ -112,12 +126,12 @@ function FormBase(props: Props) {
   }, [previousRequestStatus, requestStatus, handleClose]);
 
   const handleSubmit = () => {
-    if (Object.keys(errors).length === 0) {
-      putFirmware({
-        id: initialData.id,
-        publishedDate: initialData.publishedDate,
-        ...values
-      });
+    if (!hasErrors) {
+      const params = {
+        ...values,
+        file
+      } as ApiPostFirmwareParams & ApiPostFileImageParams;
+      postFirmware(params);
     }
   };
 
@@ -129,12 +143,17 @@ function FormBase(props: Props) {
     if (!values.models || values.models.length === 0) {
       errors.models = "Required";
     }
+    if (!file) {
+      errors.file = "Required";
+    }
     setErrors(errors);
-  }, [values]);
+  }, [values, file]);
+
+  const hasErrors = Object.keys(errors).length !== 0;
 
   return (
     <React.Fragment>
-      <DialogTitle id="form-dialog-title">{`Updade Device Firmware ${initialData.id}`}</DialogTitle>
+      <DialogTitle id="form-dialog-title">{`Create Device Model`}</DialogTitle>
       <DialogContent dividers>
         {apiCall.status === RequestStatus.FAILURE && (
           <div className={classes.error}>
@@ -161,9 +180,9 @@ function FormBase(props: Props) {
         </Typography>
         <div className={classes.field}>
           <DeviceModelAutocomplete
-            error={errors.models}
             value={values.models}
             onChange={handleModelsChange}
+            error={Boolean(errors.models)}
           />
         </div>
         <Typography variant="caption" color="textSecondary">
@@ -181,15 +200,15 @@ function FormBase(props: Props) {
           fullWidth
         />
         <Typography variant="caption" color="textSecondary">
-          Url
+          File
         </Typography>
-        <Typography
-          className={classes.field}
-          variant="body1"
-          color="textPrimary"
-        >
-          {initialData.url}
-        </Typography>
+        <div className={classes.field}>
+          <FileDropzone
+            error={Boolean(errors.file)}
+            value={file ? file.name : undefined}
+            onChange={handleFileChange}
+          />
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="default">
@@ -199,9 +218,9 @@ function FormBase(props: Props) {
           onClick={handleSubmit}
           color="primary"
           variant="contained"
-          disabled={requestStatus === RequestStatus.FETCHING}
+          disabled={hasErrors || requestStatus === RequestStatus.FETCHING}
         >
-          Update
+          Create
         </Button>
       </DialogActions>
     </React.Fragment>
@@ -209,7 +228,7 @@ function FormBase(props: Props) {
 }
 
 const mapStateToProps = (state: StoreState): ReduxStateProps => {
-  const apiCall = state.api.putFirmware;
+  const apiCall = state.api.postFirmware;
 
   return {
     apiCall
@@ -219,7 +238,7 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
 const Form = connect(
   mapStateToProps,
   {
-    putFirmware
+    postFirmware
   }
 )(FormBase);
 

@@ -13,6 +13,7 @@ import { getPaginationQuery, PaginationQuery } from "../../helpers/queryString";
 import { push } from "connected-react-router";
 import * as queryString from "query-string";
 import { RouteComponentProps } from "react-router";
+import DeviceFirmwareCreateModal from "../../modals/DeviceFirmwareCreate";
 import DeviceFirmwareUpdateModal from "../../modals/DeviceFirmwareUpdate";
 
 interface ReduxStateProps {}
@@ -74,6 +75,7 @@ function DeviceFirmwareBase(props: Props) {
         }
         content={<TableDeviceFirmware onPageChange={handlePageChange} />}
       />
+      <DeviceFirmwareCreateModal />
       <DeviceFirmwareUpdateModal />
     </React.Fragment>
   );

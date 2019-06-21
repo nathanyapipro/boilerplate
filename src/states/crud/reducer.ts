@@ -49,7 +49,8 @@ export function crud(
         pagination
       };
     }
-    case getType(apiActions.postDeviceModel.success): {
+    case getType(apiActions.postDeviceModel.success):
+    case getType(apiActions.postFirmware.success): {
       const data = action.payload;
       const ids = [...state.ids, data.id];
       return {

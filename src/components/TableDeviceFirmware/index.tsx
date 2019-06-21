@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import { Pagination } from "../../types/models";
 import { PaginationQuery } from "../../helpers/queryString";
+import { actions } from "../../states/crud/actions";
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -55,12 +56,16 @@ interface ReduxStateProps {
   pagination?: Pagination;
 }
 
-type Props = OwnProps & ReduxStateProps;
+interface ReduxDispatchProps {
+  setIsCreating: (params: boolean) => void;
+}
+
+type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 function TableDeviceFirmwareBase(props: Props) {
   const classes = useStyles();
 
-  const { ids, apiCall, pagination, onPageChange } = props;
+  const { ids, apiCall, pagination, onPageChange, setIsCreating } = props;
 
   const { total = 0, pageNum = 0, pageSize = 0 } = pagination || {};
 
@@ -72,6 +77,10 @@ function TableDeviceFirmwareBase(props: Props) {
       page: page + 1,
       size: pageSize
     });
+  };
+
+  const handleCreate = () => {
+    setIsCreating(true);
   };
 
   return (
@@ -96,6 +105,7 @@ function TableDeviceFirmwareBase(props: Props) {
           color="primary"
           variant="contained"
           className={classes.createButton}
+          onClick={handleCreate}
         >
           <AddIcon className={classes.icon} fontSize="small" />
           Create
@@ -142,6 +152,9 @@ const mapStateToProps = (state: StoreState): ReduxStateProps => {
   };
 };
 
-const TableDeviceFirmware = connect(mapStateToProps)(TableDeviceFirmwareBase);
+const TableDeviceFirmware = connect(
+  mapStateToProps,
+  { setIsCreating: actions.setIsCreating }
+)(TableDeviceFirmwareBase);
 
 export default TableDeviceFirmware;

@@ -290,7 +290,7 @@ export const postFirmware: ThunkActionCreator<
         params.url = postFileFirmwareResponse.url;
       }
     }
-    const response = await apiClient.postFirmware(input);
+    const response = await apiClient.postFirmware(params);
     validateBySchema(ApiPostFirmwareResponseSchema, response);
     dispatch(actions.postFirmware.success(response));
   } catch (err) {

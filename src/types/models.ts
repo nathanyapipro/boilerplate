@@ -72,7 +72,7 @@ export interface DeviceModel extends ModelBase {
 }
 
 interface FirmwareBase extends ModelBase {
-  description: string;
+  description?: string;
   publishedDate: string;
   url?: string;
   version: string;

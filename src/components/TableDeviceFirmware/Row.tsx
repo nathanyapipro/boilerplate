@@ -73,7 +73,7 @@ const RowBase = function RowBase(props: Props) {
     return firmware.models.map(deviceModelId => {
       const deviceModel = deviceModelsById[deviceModelId];
       return (
-        <ListItem>
+        <ListItem disableGutters>
           <ListItemAvatar>
             <Avatar alt="image" src={deviceModel.imageUrl} />
           </ListItemAvatar>

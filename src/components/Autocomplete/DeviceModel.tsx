@@ -53,7 +53,7 @@ function DeviceModelAutocompleteBase(props: Props) {
     <Autocomplete
       {...rest}
       isMulti
-      placeholder="Assign to user..."
+      placeholder="Select Models ..."
       options={options}
       value={selectedOptions}
       onChange={handleChange}

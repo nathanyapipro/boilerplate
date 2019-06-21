@@ -142,7 +142,7 @@ function Option(props: OptionProps<OptionType>) {
 function Placeholder(props: PlaceholderProps<OptionType>) {
   return (
     <Typography
-      color="inherit"
+      color="textSecondary"
       className={props.selectProps.classes.placeholder}
       {...props.innerProps}
     >

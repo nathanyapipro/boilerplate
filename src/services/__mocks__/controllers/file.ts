@@ -16,7 +16,7 @@ export function postFileImage(
 export function postFileFirmware(
   requestConfig: AxiosRequestConfig,
   store: StoreState
-): ApiPostFileImageResponse {
+): ApiPostFileFirmwareResponse {
   return {
     url: faker.internet.url()
   };

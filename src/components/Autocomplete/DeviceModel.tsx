@@ -1,12 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { StoreState } from "../../states";
-import Autocomplete, {
-  OptionsType,
-  AutocompleteProps,
-  ValueType,
-  OptionType
-} from ".";
+import Autocomplete, { OptionsType, AutocompleteProps, ValueType } from ".";
 import { Omit } from "../../types";
 import * as autocompleteHelper from "../../helpers/autocomplete";
 import { $deviceModelOptions } from "../../states/cache/selectors";

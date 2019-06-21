@@ -19,7 +19,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import { formatDeviceModel } from "../../helpers/deviceModel";
-import { returnStatement } from "@babel/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {

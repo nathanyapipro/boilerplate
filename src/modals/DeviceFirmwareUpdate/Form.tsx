@@ -19,7 +19,6 @@ import usePrevious from "../../hooks/usePrevious";
 import DeviceModelAutocomplete, {
   DeviceModelAutocompleteValue
 } from "../../components/Autocomplete/DeviceModel";
-import { $deviceModelsById } from "../../states/cache/selectors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
